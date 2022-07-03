@@ -18,8 +18,8 @@ import {
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
 import ProfileScreen from "../screens/ProfileScreen";
-import WelcomeScreen from "../screens/WelcomeScreen";
 import EventScreen from "../screens/EventScreen";
+import WelcomeScreen from "../screens/WelcomeScreen/WelcomeScreen";
 
 export default function Navigation() {
   return (
