@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    fontFamily: "futura",
+    //fontFamily: "futura",
     textTransform: "uppercase",
     color: Colors["tintColorLight"],
     letterSpacing: 2,
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
   day: {
     color: "#9D9D9D",
     fontSize: 17,
-    fontFamily: "futura",
+    //fontFamily: "futura",
   },
   active: {
     color: "#FFF4F4",
