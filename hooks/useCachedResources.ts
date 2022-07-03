@@ -15,7 +15,7 @@ export default function useCachedResources() {
         // Load fonts
         await Font.loadAsync({
           ...FontAwesome.font,
-          'futura': require('../assets/fonts/futura medium condensed bt.ttf'),
+          //'futura': require('../assets/fonts/futura medium condensed bt.ttf'),
         });
       } catch (e) {
         // We might want to provide this error information to an error reporting service

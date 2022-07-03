@@ -62,7 +62,7 @@ function RootNavigator() {
           headerTintColor: Colors["primaryColor"],
           headerTitleStyle: {
             color: Colors["primaryColor"],
-            fontFamily: "futura",
+            //fontFamily: "futura",
             fontSize: 25,
           },
         }}
@@ -107,7 +107,7 @@ function BottomTabNavigator() {
         headerTitleStyle: {
           color: Colors["primaryColor"],
           textTransform: "uppercase",
-          fontFamily: "futura",
+          //fontFamily: "futura",
           letterSpacing: 1,
         },
         headerTransparent: true,
