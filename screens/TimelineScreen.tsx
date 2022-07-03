@@ -69,8 +69,8 @@ export default function TimelineScreen() {
         </View>
         <Animated.ScrollView style={[styles.events, { opacity: fadeAnim }]}>
           {data
-            .filter((val, idx) => val["day"] == days[0])
-            .map((ev, i) => (
+            .filter((val: any) => val["day"] == days[0])
+            .map((ev: any, i: number) => (
               <Event {...ev} day={days[0].toString()} key={i} />
             ))}
         </Animated.ScrollView>

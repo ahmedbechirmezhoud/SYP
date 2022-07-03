@@ -1,15 +1,81 @@
-import { StatusBar } from 'expo-status-bar';
-import { Platform, StyleSheet, Text, View } from 'react-native';
-import Colors from '../constants/Colors';
+import { StatusBar } from "expo-status-bar";
+import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import Colors from "../constants/Colors";
+import Layout from "../constants/Layout";
 
+const data = [
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message: "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, conse",
+  },
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message: "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, conse",
+  },
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message: "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, conse",
+  },
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message: "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, conse",
+  },
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message: "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, conse",
+  },
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message: "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, conse",
+  },
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message: "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, conse",
+  },
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message: "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, conse",
+  },
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message: "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, conse",
+  },
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message: "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, conse",
+  },
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message: "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, conse",
+  },
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message: "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, conse",
+  },
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message: "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, conse",
+  },
+  {
+    title: "Welcome to Tunisia 🇹🇳",
+    message:
+      "Ahla b sa7bi marahba bik Lorem ipsum dolor sit amet, consedmkjfsjmkfjsdfkmjsdjfmdksjfkmsdjfkmdsjfkmjdkjfkmj",
+  },
+];
 
 export default function NotificationsScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Notifications</Text>
-      <View style={styles.separator} />
+      <ScrollView style={styles.warpper}>
+        {data.map((notif, idx) => (
+          <View key={idx} style={styles.notification}>
+            <Text style={styles.title}> {notif.title} </Text>
+            <Text style={styles.message}>{notif.message}</Text>
+          </View>
+        ))}
+      </ScrollView>
 
-      <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
+      <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </View>
   );
 }
@@ -17,17 +83,24 @@ export default function NotificationsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: Colors["backgroundColor"]
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: Colors["backgroundColor"],
+  },
+  warpper: {
+    marginTop: 130,
+  },
+  notification: {
+    backgroundColor: Colors["tintColorLight"],
+    width: Layout.window.width,
+    marginVertical: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 13,
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+    fontSize: 15,
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  message: {
+    fontSize: 10,
   },
 });

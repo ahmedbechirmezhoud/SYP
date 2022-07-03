@@ -49,10 +49,10 @@ export const styles = StyleSheet.create({
     skip: {
         textAlign: "center",
         fontWeight: "bold",
-        fontSize: 18
+        fontSize: 10
     },
     continue: {
-        fontSize: 10
+        fontSize: 8
     },
     container: {
         display: "flex",
@@ -78,7 +78,7 @@ export const styles = StyleSheet.create({
         color: "#FFFAF4"
     },
     syp_congress: {
-        fontSize: 42,
+        fontSize: 30,
         fontWeight: "bold",
         color: "#FFFAF4"
     },
