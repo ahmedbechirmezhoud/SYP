@@ -1,8 +1,4 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
+// @ts-nocheck
 import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
@@ -23,6 +19,7 @@ import {
 import LinkingConfiguration from "./LinkingConfiguration";
 import ProfileScreen from "../screens/ProfileScreen";
 import WelcomeScreen from "../screens/WelcomeScreen";
+import EventScreen from "../screens/EventScreen";
 
 export default function Navigation() {
   return (
@@ -42,13 +39,13 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Welcome"
-        component={WelcomeScreen}
+        name="Root"
+        component={BottomTabNavigator}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
+        name="Welcome"
+        component={WelcomeScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -65,9 +62,7 @@ function RootNavigator() {
           headerTintColor: Colors["primaryColor"],
           headerTitleStyle: {
             color: Colors["primaryColor"],
-            textTransform: "uppercase",
             fontFamily: "futura",
-            letterSpacing: 1,
             fontSize: 25,
           },
         }}
@@ -76,6 +71,17 @@ function RootNavigator() {
           name="Notifications"
           component={NotificationsScreen}
           options={{ animation: "fade_from_bottom" }}
+        />
+        <Stack.Screen
+          name="Event"
+          component={EventScreen}
+          options={{
+            headerTransparent: true,
+            headerTintColor: Colors["backgroundColor"],
+            headerTitle: "",
+            animation: "fade_from_bottom",
+            animationTypeForReplace: "push",
+          }}
         />
       </Stack.Group>
     </Stack.Navigator>
@@ -103,7 +109,6 @@ function BottomTabNavigator() {
           textTransform: "uppercase",
           fontFamily: "futura",
           letterSpacing: 1,
-          fontSize: 25,
         },
         headerTransparent: true,
         headerShadowVisible: false,

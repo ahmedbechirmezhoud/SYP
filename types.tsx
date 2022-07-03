@@ -16,11 +16,18 @@ declare global {
   }
 }
 
+export type EventProps = {
+  title: string;
+  location: string;
+  time: string;
+  Icon?: any;
+};
+
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Welcome: undefined;
   Notifications: undefined;
-  Event: undefined;
+  Event: EventProps | undefined;
   NotFound: undefined;
 };
 
