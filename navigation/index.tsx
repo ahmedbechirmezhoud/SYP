@@ -21,7 +21,7 @@ import {
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
-import ProfileScreen from "../screens/ProfileScreen";
+import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
 import WelcomeScreen from "../screens/WelcomeScreen/WelcomeScreen";
 
 export default function Navigation() {
