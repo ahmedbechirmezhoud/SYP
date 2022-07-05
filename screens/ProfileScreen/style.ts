@@ -19,7 +19,7 @@ export const styles = StyleSheet.create({
         // paddingRight: 30
     },
     welcome: {
-        color: "#E5701B",
+        color: Colors["primaryColor"],
         fontWeight: "bold",
         fontSize: 20
     },
@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
         paddingLeft: 10,
         borderRadius: 5,
         height: 35,
-        borderColor: "#FFE9CE",
+        borderColor: Colors["tintColorLight"],
         borderWidth: 2
     },
     currentIDContainer: {

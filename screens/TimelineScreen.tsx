@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useState, useRef } from "react";
 import { StyleSheet, Text, View, Animated } from "react-native";
 import Colors from "../constants/Colors";
@@ -6,6 +7,8 @@ import Event from "../components/Event";
 
 import data from "../schedule-data";
 import moment from "moment";
+
+import Svg, { Polygon } from "react-native-svg";
 
 export default function TimelineScreen() {
   const [days, setDays] = useState([3, 4, 5, 6, 7]);
@@ -60,7 +63,12 @@ export default function TimelineScreen() {
               </Animated.Text>
               {!i && (
                 <>
-                  <View style={styles.triangle} />
+                  <Svg height="8" width="15">
+                    <Polygon
+                      points="0,0 7.5,10 15,0"
+                      fill={Colors["primaryColor"]}
+                    />
+                  </Svg>
                   <View style={styles.line} />
                 </>
               )}
@@ -118,21 +126,6 @@ const styles = StyleSheet.create({
   dayWarpper: {
     justifyContent: "flex-end",
     alignItems: "center",
-  },
-  triangle: {
-    width: 0,
-    height: 0,
-    backgroundColor: "transparent",
-    borderStyle: "solid",
-    borderLeftWidth: 10,
-    borderRightWidth: 10,
-    borderBottomWidth: 20,
-    borderLeftColor: "transparent",
-    borderRightColor: "transparent",
-    borderBottomColor: Colors["primaryColor"],
-    borderRadius: 5,
-    transform: [{ rotate: "180deg" }],
-    marginTop: 3,
   },
   separator: {
     width: 2,

@@ -9,6 +9,7 @@ import {
   View,
 } from "react-native";
 import CustomButton from "../../components/CustomButton/CustomButton";
+import Colors from "../../constants/Colors";
 import { RootTabScreenProps } from "../../types";
 import { styles } from "./style";
 
@@ -52,8 +53,8 @@ export default function ProfileScreen({
                 title="CHANGE"
                 onPress={changeIEEEIdentifier}
                 width="60%"
-                bgColor="#F86918CC"
-                color="#FFF4F4"
+                bgColor={Colors["primaryColor"] + "CC"}
+                color={Colors["backgroundColor"]}
               />
             </View>
           </View>
