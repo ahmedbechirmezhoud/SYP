@@ -10,9 +10,10 @@ export const styles = StyleSheet.create({
     },
     QRImage: {
         marginTop: "30%",
+        padding: 10,
+        borderRadius: 10,
         alignItems :"center",
-        backgroundColor: "#fff"
-        
+        backgroundColor: "#fff",          
     },
     currentUser: {
         marginTop: 40,

@@ -7,10 +7,11 @@ import {
   GoogleAuthProvider,
   signInWithCredential,
 } from "firebase/auth";
-import CustomButton from "./CustomButton/CustomButton";
 import Svg, { Path } from "react-native-svg";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
+import { CurrentUser } from "../utils/user";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 
 export default class AuthButton extends React.Component {
   state = { user: null };
@@ -47,7 +48,11 @@ export default class AuthButton extends React.Component {
           user?.auth?.idToken,
           user?.auth?.accessToken
         );
-        return signInWithCredential(getAuth(), credential);
+        signInWithCredential(getAuth(), credential).then((userCredential) => {
+          getDoc(doc(getFirestore(), "users", user?.email)).then((doc) => {
+            CurrentUser.loginJson({ email: doc.id, ...doc.data() });
+          });
+        });
       }
     } catch ({ message }) {
       alert("login: Error:" + message);

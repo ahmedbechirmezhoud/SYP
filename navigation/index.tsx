@@ -31,6 +31,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { getFirestore, setDoc, doc } from "firebase/firestore";
 import { registerForPushNotificationsAsync } from "../services/notifications";
+import { CurrentUser } from "../utils/user";
 
 export default function Navigation() {
   const [user, setUser] = React.useState<User | null>(null);
@@ -94,6 +95,7 @@ function RootNavigator() {
 
   onAuthStateChanged(getAuth(), async (currUser) => {
     if (currUser) {
+      CurrentUser.updateInfo({ NotificationToken: expoPushToken });
       await setDoc(doc(getFirestore(), "users", currUser.email || ""), {
         NotificationToken: expoPushToken,
       }).catch((error) => alert(error));

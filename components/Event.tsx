@@ -1,6 +1,5 @@
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import PlaneIcon from "../assets/Icons/PlaneIcon";
 
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
@@ -41,7 +40,7 @@ export default function Event({ title, from, to, day, Icon }: EventProps) {
       onPress={() => {
         navigation.navigate("Event", {
           title: title,
-          time: from[0] + ":" + from[1] + " - " + to[0] + ":" + to[1],
+          time: `${from[0]}:${from[1]}` + (to[0] && ` - ${to[0]}:${to[1]}`),
           location: "",
           Icon: Icon,
         });

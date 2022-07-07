@@ -1,4 +1,4 @@
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import Colors from "../constants/Colors";
