@@ -1,23 +1,17 @@
+import { getCurrentUser } from "expo-google-sign-in";
 import {
   Image,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
   Text,
-  TextInput,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import CustomButton from "../../components/CustomButton/CustomButton";
-import Colors from "../../constants/Colors";
-import { RootTabScreenProps } from "../../types";
+import AuthButton from "../../components/AuthButton";
 import { styles } from "./style";
 
-export default function ProfileScreen({
-  navigation,
-}: RootTabScreenProps<"Timeline">) {
-  const changeIEEEIdentifier = () => {};
-
+export default function ProfileScreen() {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -25,38 +19,22 @@ export default function ProfileScreen({
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <>
-          <Image
-            style={styles.QRImage}
-            source={require("./../../assets/images/QR.png")}
-          />
-
+          <View style={styles.QRImage}>
+            <Image source={require("./../../assets/images/QR.png")} />
+            <Text>Participant's ID</Text>
+          </View>
           <View style={styles.currentUser}>
-            <Text style={styles.welcome}>WELCOME, BECHIIIIIR</Text>
-
-            <Text style={styles.customizeExp}>
-              We need the IEEE ID to customize your app experience
+            <Text style={styles.welcome}>
+              WELCOME, {getCurrentUser()?.displayName}
             </Text>
 
-            <View style={styles.currentIDContainer}>
-              <Text style={styles.currentIDTitle}>Current ID :</Text>
-              <Text style={styles.currentID}> 5465446464</Text>
-            </View>
+            <Text style={styles.customizeExp}>
+              The IT Team wish you a great experience⚡
+            </Text>
           </View>
 
           <View style={styles.changeIDSection}>
-            <Text style={styles.title}>NEW IEEE IDENTIFIER</Text>
-
-            <TextInput placeholder="000000000000" style={styles.inputArea} />
-
-            <View style={styles.buttonContainer}>
-              <CustomButton
-                title="CHANGE"
-                onPress={changeIEEEIdentifier}
-                width="60%"
-                bgColor={Colors["primaryColor"] + "CC"}
-                color={Colors["backgroundColor"]}
-              />
-            </View>
+            <AuthButton />
           </View>
         </>
       </TouchableWithoutFeedback>

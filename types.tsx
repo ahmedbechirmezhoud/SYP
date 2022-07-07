@@ -23,6 +23,10 @@ export type EventProps = {
   Icon?: any;
 };
 
+export type AuthStackParamList = {
+  Welcome: undefined;
+};
+
 export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Welcome: undefined;

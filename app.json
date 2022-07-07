@@ -19,7 +19,12 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ieee.syp",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "config": {
+        "googleSignIn": {
+          "reservedClientId": "com.googleusercontent.apps.640548717558-dhdt10vs2tjqcs9338pk3gf06kmmgmsd"
+        }
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -49,12 +54,8 @@
       [
         "expo-notifications",
         {
-          "icon": "./local/assets/icon.png",
-          "color": "#FFF8F1",
-          "sounds": [
-            "./local/assets/notification-sound.wav",
-            "./local/assets/notification-sound-other.wav"
-          ]
+          "icon": "./assets/images/icon.png",
+          "color": "#FFF8F1"
         }
       ]
     ]

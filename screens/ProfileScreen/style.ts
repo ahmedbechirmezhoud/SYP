@@ -9,7 +9,10 @@ export const styles = StyleSheet.create({
         backgroundColor: Colors["backgroundColor"]
     },
     QRImage: {
-        marginTop: "30%"
+        marginTop: "30%",
+        alignItems :"center",
+        backgroundColor: "#fff"
+        
     },
     currentUser: {
         marginTop: 40,
@@ -21,7 +24,8 @@ export const styles = StyleSheet.create({
     welcome: {
         color: Colors["primaryColor"],
         fontWeight: "bold",
-        fontSize: 20
+        fontSize: 20, 
+        textTransform: "uppercase"
     },
     changeIDSection: {
         marginTop: 80,

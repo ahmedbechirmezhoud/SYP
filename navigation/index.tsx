@@ -12,6 +12,7 @@ import NotFoundScreen from "../screens/NotFoundScreen";
 import ContactScreen from "../screens/ContactScreen";
 import TimelineScreen from "../screens/TimelineScreen";
 import {
+  AuthStackParamList,
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
@@ -21,28 +22,86 @@ import EventScreen from "../screens/EventScreen";
 import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
 import WelcomeScreen from "../screens/WelcomeScreen/WelcomeScreen";
 
+import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import {
+  addNotificationReceivedListener,
+  addNotificationResponseReceivedListener,
+  removeNotificationSubscription,
+} from "expo-notifications";
+import { useEffect, useRef, useState } from "react";
+import { getFirestore, setDoc, doc } from "firebase/firestore";
+import { registerForPushNotificationsAsync } from "../services/notifications";
+
 export default function Navigation() {
+  const [user, setUser] = React.useState<User | null>(null);
+
+  onAuthStateChanged(getAuth(), async (currUser) => {
+    if (currUser) setUser(currUser);
+    else setUser(null);
+  });
+
   return (
     <NavigationContainer linking={LinkingConfiguration}>
-      <RootNavigator />
+      {!user ? <RootNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const AuthStack = createNativeStackNavigator<AuthStackParamList>();
 
-function RootNavigator() {
+function AuthNavigator() {
   return (
-    <Stack.Navigator>
-      <Stack.Screen
+    <AuthStack.Navigator>
+      <AuthStack.Screen
         name="Welcome"
         component={WelcomeScreen}
         options={{ headerShown: false }}
       />
+    </AuthStack.Navigator>
+  );
+}
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+
+function RootNavigator() {
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [notification, setNotification] = useState<any>();
+  const notificationListener = useRef<any>();
+  const responseListener = useRef<any>();
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token: any) =>
+      setExpoPushToken(token || "")
+    );
+
+    notificationListener.current = addNotificationReceivedListener(
+      (notification) => {
+        setNotification(notification);
+      }
+    );
+
+    responseListener.current = addNotificationResponseReceivedListener(
+      (response) => {
+        console.log(response);
+      }
+    );
+
+    return () => {
+      removeNotificationSubscription(notificationListener.current);
+      removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
+
+  onAuthStateChanged(getAuth(), async (currUser) => {
+    if (currUser) {
+      await setDoc(doc(getFirestore(), "users", currUser.email || ""), {
+        NotificationToken: expoPushToken,
+      }).catch((error) => alert(error));
+    }
+  });
+
+  return (
+    <Stack.Navigator>
       <Stack.Screen
         name="Root"
         component={BottomTabNavigator}

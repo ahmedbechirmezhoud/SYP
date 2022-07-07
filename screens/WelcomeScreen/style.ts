@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
         paddingLeft: 25,
         paddingRight: 25,
         paddingBottom: 20,
-        justifyContent: "space-between"
+        justifyContent: "center"
     },
     logo: {
         width: Window.window.width * 0.35,
@@ -37,22 +37,6 @@ export const styles = StyleSheet.create({
     },
     white: {
         color: "#FFFAF4"
-    },
-    skipBtn: {
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "center"
-    },
-    skipBtnText: {
-        marginRight: 10
-    },
-    skip: {
-        textAlign: "center",
-        fontWeight: "bold",
-        fontSize: 10
-    },
-    continue: {
-        fontSize: 8
     },
     container: {
         display: "flex",
