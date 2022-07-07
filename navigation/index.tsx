@@ -43,7 +43,7 @@ export default function Navigation() {
 
   return (
     <NavigationContainer linking={LinkingConfiguration}>
-      {!user ? <RootNavigator /> : <AuthNavigator />}
+      <RootNavigator />
     </NavigationContainer>
   );
 }
