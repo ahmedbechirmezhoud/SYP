@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import * as GoogleSignIn from "expo-google-sign-in";
 import {
@@ -37,7 +37,7 @@ export default class AuthButton extends React.Component {
   render() {
     const { state, dispatch } = this.context;
 
-    signOutAsync = async () => {
+    const signOutAsync = async () => {
       await GoogleSignIn.signOutAsync();
       this.setState({ user: null });
       dispatch({ type: Types.LOGOUT, payload: {} });
@@ -68,7 +68,7 @@ export default class AuthButton extends React.Component {
 
     const onPress = () => {
       if (this.state.user) {
-        this.signOutAsync();
+        signOutAsync();
       } else {
         signInAsync();
       }
