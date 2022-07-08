@@ -31,7 +31,6 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { getFirestore, setDoc, doc } from "firebase/firestore";
 import { registerForPushNotificationsAsync } from "../services/notifications";
-import { CurrentUser } from "../utils/user";
 import { useContext } from "react";
 import { AppContext } from "../Context/AppContext";
 import { Types } from "../Context/types";

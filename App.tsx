@@ -7,7 +7,7 @@ import Navigation from "./navigation";
 import { setNotificationHandler } from "expo-notifications";
 import { useEffect } from "react";
 import { initializeApp } from "firebase/app";
-import { AppContext } from "./Context/AppContext";
+import { AppContext, AppProvider } from "./Context/AppContext";
 
 setNotificationHandler({
   handleNotification: async () => ({
@@ -38,17 +38,19 @@ export default function App() {
     return null;
   } else {
     return (
-      <AppContext.Consumer>
-        {(value) => {
-          console.log(value);
-          return (
-            <SafeAreaProvider>
-              <Navigation />
-              <StatusBar />
-            </SafeAreaProvider>
-          );
-        }}
-      </AppContext.Consumer>
+      <AppProvider>
+        <AppContext.Consumer>
+          {(value) => {
+            console.log(value);
+            return (
+              <SafeAreaProvider>
+                <Navigation />
+                <StatusBar />
+              </SafeAreaProvider>
+            );
+          }}
+        </AppContext.Consumer>
+      </AppProvider>
     );
   }
 }
