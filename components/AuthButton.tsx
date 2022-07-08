@@ -1,6 +1,5 @@
-// @ts-nocheck
-import React from "react";
-import { Pressable, Text, TouchableOpacity } from "react-native";
+import React, { useContext } from "react";
+import { Text, TouchableOpacity } from "react-native";
 import * as GoogleSignIn from "expo-google-sign-in";
 import {
   getAuth,
@@ -10,15 +9,17 @@ import {
 import Svg, { Path } from "react-native-svg";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
-import { CurrentUser } from "../utils/user";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { AppContext } from "../Context/AppContext";
+import { Types } from "../Context/types";
 
 export default class AuthButton extends React.Component {
   state = { user: null };
-
   componentDidMount() {
     this.initAsync();
   }
+
+  static contextType = AppContext;
 
   initAsync = async () => {
     await GoogleSignIn.initAsync({
@@ -33,44 +34,49 @@ export default class AuthButton extends React.Component {
     this.setState({ user });
   };
 
-  signOutAsync = async () => {
-    await GoogleSignIn.signOutAsync();
-    this.setState({ user: null });
-  };
-
-  signInAsync = async () => {
-    try {
-      await GoogleSignIn.askForPlayServicesAsync();
-      const { type, user } = await GoogleSignIn.signInAsync();
-      if (type === "success") {
-        this._syncUserWithStateAsync();
-        const credential = GoogleAuthProvider.credential(
-          user?.auth?.idToken,
-          user?.auth?.accessToken
-        );
-        signInWithCredential(getAuth(), credential).then((userCredential) => {
-          getDoc(doc(getFirestore(), "users", user?.email)).then((doc) => {
-            CurrentUser.loginJson({ email: doc.id, ...doc.data() });
-          });
-        });
-      }
-    } catch ({ message }) {
-      alert("login: Error:" + message);
-    }
-  };
-
-  onPress = () => {
-    if (this.state.user) {
-      this.signOutAsync();
-    } else {
-      this.signInAsync();
-    }
-  };
-
   render() {
+    const { state, dispatch } = this.context;
+
+    signOutAsync = async () => {
+      await GoogleSignIn.signOutAsync();
+      this.setState({ user: null });
+      dispatch({ type: Types.LOGOUT, payload: {} });
+    };
+
+    const signInAsync = async () => {
+      try {
+        await GoogleSignIn.askForPlayServicesAsync();
+        const { type, user } = await GoogleSignIn.signInAsync();
+        if (type === "success") {
+          this._syncUserWithStateAsync();
+          const credential = GoogleAuthProvider.credential(
+            user?.auth?.idToken,
+            user?.auth?.accessToken
+          );
+          signInWithCredential(getAuth(), credential).then((userCredential) => {
+            if (user?.email)
+              getDoc(doc(getFirestore(), "users", user?.email)).then((doc) => {
+                dispatch({ type: Types.LOGIN, payload: doc.data() });
+              });
+            else alert("Error while Login");
+          });
+        }
+      } catch ({ message }) {
+        alert("login: Error:" + message);
+      }
+    };
+
+    const onPress = () => {
+      if (this.state.user) {
+        this.signOutAsync();
+      } else {
+        signInAsync();
+      }
+    };
+
     return (
       <TouchableOpacity
-        onPress={this.onPress}
+        onPress={onPress}
         style={{
           flexDirection: "row",
           alignItems: "center",

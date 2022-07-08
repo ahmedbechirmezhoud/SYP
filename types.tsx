@@ -49,3 +49,29 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     BottomTabScreenProps<RootTabParamList, Screen>,
     NativeStackScreenProps<RootStackParamList>
   >;
+
+export interface User {
+  email: string;
+  IEEEID: string;
+  NotificationToken?: string;
+  Notifications?: Notification[];
+  FirstName?: string;
+  LastName?: string;
+  Gender?: string;
+  DateofBirth?: string;
+  PassportNumber?: string;
+  CountryOfResidence?: string;
+}
+
+export interface Notification {
+  title: string;
+  message: string;
+}
+
+export interface EventTimeline {
+  title: string;
+  from: string[];
+  to: string[];
+  day: number;
+  Icon: ({ fill, ...props }: { [x: string]: any; fill: any }) => JSX.Element;
+}

@@ -1,5 +1,4 @@
 import {
-  Image,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -8,11 +7,14 @@ import {
   View,
 } from "react-native";
 import AuthButton from "../../components/AuthButton";
-import { CurrentUser } from "../../utils/user";
 import { styles } from "./style";
 import QRCode from "react-native-qrcode-svg";
+import { useContext } from "react";
+import { AppContext } from "../../Context/AppContext";
 
 export default function ProfileScreen() {
+  const { state } = useContext(AppContext);
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -21,13 +23,13 @@ export default function ProfileScreen() {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <>
           <View style={styles.QRImage}>
-            <QRCode value={CurrentUser.IEEEID || "error"} size={150} />
+            <QRCode value={state.user.IEEEID || "error"} size={150} />
             <Text style={{ fontSize: 10, marginTop: 5, fontWeight: "bold" }}>
               Participant ID
             </Text>
           </View>
           <View style={styles.currentUser}>
-            <Text style={styles.welcome}>WELCOME, {CurrentUser.FirstName}</Text>
+            <Text style={styles.welcome}>WELCOME, {state.user.FirstName}</Text>
 
             <Text style={styles.customizeExp}>
               The IT Team wish you a great experience⚡

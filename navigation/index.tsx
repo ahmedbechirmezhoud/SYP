@@ -32,6 +32,9 @@ import { useEffect, useRef, useState } from "react";
 import { getFirestore, setDoc, doc } from "firebase/firestore";
 import { registerForPushNotificationsAsync } from "../services/notifications";
 import { CurrentUser } from "../utils/user";
+import { useContext } from "react";
+import { AppContext } from "../Context/AppContext";
+import { Types } from "../Context/types";
 
 export default function Navigation() {
   const [user, setUser] = React.useState<User | null>(null);
@@ -69,6 +72,7 @@ function RootNavigator() {
   const [notification, setNotification] = useState<any>();
   const notificationListener = useRef<any>();
   const responseListener = useRef<any>();
+  const { state, dispatch } = useContext(AppContext);
 
   useEffect(() => {
     registerForPushNotificationsAsync().then((token: any) =>
@@ -87,6 +91,20 @@ function RootNavigator() {
       }
     );
 
+    dispatch({
+      type: Types.LOGIN,
+      payload: {
+        email: null,
+        NotificationToken: expoPushToken,
+        Notifications: [],
+        FirstName: null,
+        LastName: null,
+        Gender: null,
+        DateofBirth: null,
+        PassportNumber: null,
+        CountryOfResidence: null,
+      },
+    });
     return () => {
       removeNotificationSubscription(notificationListener.current);
       removeNotificationSubscription(responseListener.current);

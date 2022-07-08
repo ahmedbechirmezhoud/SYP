@@ -1,15 +1,18 @@
 import { StatusBar } from "expo-status-bar";
+import { useContext } from "react";
 import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
-import { CurrentUser } from "../utils/user";
+import { AppContext } from "../Context/AppContext";
 
 export default function NotificationsScreen() {
+  const { state } = useContext(AppContext);
+
   return (
     <View style={styles.container}>
       <ScrollView style={styles.warpper}>
-        {CurrentUser.Notifications != [] ? (
-          CurrentUser.Notifications.map((notif, idx) => (
+        {state.user.Notifications != [] ? (
+          state.user.Notifications.map((notif, idx) => (
             <View key={idx} style={styles.notification}>
               <Text style={styles.title}> {notif.title} </Text>
               <Text style={styles.message}>{notif.message}</Text>
