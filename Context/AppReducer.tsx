@@ -1,4 +1,6 @@
+// @ts-nocheck
 import { EventTimeline, User } from "../types";
+import { defaultUser } from "./AppContext";
 import {
   Reducer,
   stateType,
@@ -12,7 +14,7 @@ export const userReducer = (state: User | null, action: UserActions) => {
     case Types.LOGIN:
       return action.payload;
     case Types.LOGOUT:
-      return null;
+      return defaultUser;
     default:
       return state;
   }

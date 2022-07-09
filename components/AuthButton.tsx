@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { Text, TouchableOpacity } from "react-native";
 import * as GoogleSignIn from "expo-google-sign-in";
@@ -5,6 +6,7 @@ import {
   getAuth,
   GoogleAuthProvider,
   signInWithCredential,
+  signOut,
 } from "firebase/auth";
 import Svg, { Path } from "react-native-svg";
 import Colors from "../constants/Colors";
@@ -39,6 +41,7 @@ export default class AuthButton extends React.Component {
 
     const signOutAsync = async () => {
       await GoogleSignIn.signOutAsync();
+      await signOut(getAuth());
       this.setState({ user: null });
       dispatch({ type: Types.LOGOUT, payload: {} });
     };
@@ -56,7 +59,19 @@ export default class AuthButton extends React.Component {
           signInWithCredential(getAuth(), credential).then((userCredential) => {
             if (user?.email)
               getDoc(doc(getFirestore(), "users", user?.email)).then((doc) => {
-                dispatch({ type: Types.LOGIN, payload: doc.data() });
+                if (doc.exists())
+                  dispatch({
+                    type: Types.LOGIN,
+                    payload: {
+                      email: user?.email,
+                      ...doc.data(),
+                      isConnected: true,
+                    },
+                  });
+                else {
+                  alert("This email is not registered");
+                  signOutAsync();
+                }
               });
             else alert("Error while Login");
           });

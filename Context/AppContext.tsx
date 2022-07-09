@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useReducer, createContext, useMemo } from "react";
 import mainReducer from "./AppReducer";
 import {
@@ -8,29 +9,29 @@ import {
   UserActions,
 } from "./types";
 
+export const defaultUser = {
+  email: "",
+  Notifications: [],
+  IEEEID: "",
+  FirstName: "",
+  LastName: "",
+  Gender: "",
+  DateofBirth: "",
+  CountryOfResidence: "",
+};
+
 const initialState: stateType = {
-  user: {
-    email: "",
-    NotificationToken: "",
-    Notifications: [],
-    IEEEID: "",
-    FirstName: "",
-    LastName: "",
-    Gender: "",
-    DateofBirth: "",
-    PassportNumber: "",
-    CountryOfResidence: "",
-  },
+  user: defaultUser,
   timeline: null,
 };
 
 export const AppContext = createContext<AppContextInterface>([
   initialState,
-  () => { },
+  () => {},
 ]);
 export const AppConsumer = AppContext.Consumer;
 
-export const AppProvider = ({ children }: { children?: React.ReactNode; }) => {
+export const AppProvider = ({ children }: { children?: React.ReactNode }) => {
   const [state, dispatch] = useReducer<
     Reducer<stateType, UserActions & TimelineActions>
   >(mainReducer, initialState);

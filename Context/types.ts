@@ -25,9 +25,10 @@ ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
   export enum Types {
     LOGIN = "LOGIN",
     LOGOUT = "LOGOUT",
-    FETCH_NOTIFICATION = "FETCH_NOTIFICATION",
     ADD_NOTIFICATION = "ADD_NOTIFICATION",
     UPDATE_NOTIFICATIONTOKEN = "UPDATE_NOTIFICATIONTOKEN",
+    FETCH_EVENTS ="FETCH_EVENTS",
+    ADD_EVENT ="ADD_EVENT",
   }
   
  export type UserPayload = {
@@ -38,15 +39,17 @@ ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
     [Types.ADD_NOTIFICATION]: {
       notification: Notification;
     };
+    [Types.UPDATE_NOTIFICATIONTOKEN]: {
+        NotificationToken: string;
+      };
   };
   
 
   export type TimelinePayload = {
-    [Types.FETCH_NOTIFICATION]: {
+    [Types.FETCH_EVENTS]: {
       events: EventTimeline[] ;
     };
-    [Types.LOGOUT]: {};
-    [Types.ADD_NOTIFICATION]: {
+    [Types.ADD_EVENT]: {
       notification: Notification;
     };
   };

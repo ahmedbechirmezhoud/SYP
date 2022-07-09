@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { StatusBar } from "expo-status-bar";
 import { useContext } from "react";
 import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
@@ -11,7 +12,7 @@ export default function NotificationsScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.warpper}>
-        {state.user.Notifications != [] ? (
+        {state.user.Notifications ? (
           state.user.Notifications.map((notif, idx) => (
             <View key={idx} style={styles.notification}>
               <Text style={styles.title}> {notif.title} </Text>

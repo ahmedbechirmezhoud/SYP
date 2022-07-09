@@ -22,30 +22,29 @@ import EventScreen from "../screens/EventScreen";
 import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
 import WelcomeScreen from "../screens/WelcomeScreen/WelcomeScreen";
 
-import { getAuth, onAuthStateChanged, User } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
   addNotificationReceivedListener,
   addNotificationResponseReceivedListener,
   removeNotificationSubscription,
 } from "expo-notifications";
 import { useEffect, useRef, useState } from "react";
-import { getFirestore, setDoc, doc } from "firebase/firestore";
+import { getFirestore, doc, updateDoc } from "firebase/firestore";
 import { registerForPushNotificationsAsync } from "../services/notifications";
 import { useContext } from "react";
 import { AppContext } from "../Context/AppContext";
 import { Types } from "../Context/types";
 
 export default function Navigation() {
-  const [user, setUser] = React.useState<User | null>(null);
+  const [user, setUser] = useState(null);
 
-  onAuthStateChanged(getAuth(), async (currUser) => {
-    if (currUser) setUser(currUser);
-    else setUser(null);
+  onAuthStateChanged(getAuth(), () => {
+    setUser(getAuth().currentUser);
   });
 
   return (
     <NavigationContainer linking={LinkingConfiguration}>
-      <RootNavigator />
+      {user ? <RootNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );
 }
@@ -90,20 +89,6 @@ function RootNavigator() {
       }
     );
 
-    dispatch({
-      type: Types.LOGIN,
-      payload: {
-        email: null,
-        NotificationToken: expoPushToken,
-        Notifications: [],
-        FirstName: null,
-        LastName: null,
-        Gender: null,
-        DateofBirth: null,
-        PassportNumber: null,
-        CountryOfResidence: null,
-      },
-    });
     return () => {
       removeNotificationSubscription(notificationListener.current);
       removeNotificationSubscription(responseListener.current);
@@ -113,11 +98,20 @@ function RootNavigator() {
   onAuthStateChanged(getAuth(), async (currUser) => {
     if (currUser) {
       CurrentUser.updateInfo({ NotificationToken: expoPushToken });
-      await setDoc(doc(getFirestore(), "users", currUser.email || ""), {
+      await updateDoc(doc(getFirestore(), "users", currUser.email || ""), {
         NotificationToken: expoPushToken,
       }).catch((error) => alert(error));
     }
   });
+
+  useEffect(() => {
+    dispatch({
+      type: Types.UPDATE_NOTIFICATIONTOKEN,
+      payload: {
+        NotificationToken: expoPushToken,
+      },
+    });
+  }, [expoPushToken]);
 
   return (
     <Stack.Navigator>
