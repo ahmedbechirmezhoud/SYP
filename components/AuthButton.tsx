@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
 import * as GoogleSignIn from "expo-google-sign-in";
 import {
   getAuth,
@@ -16,7 +16,7 @@ import { AppContext } from "../Context/AppContext";
 import { Types } from "../Context/types";
 
 export default class AuthButton extends React.Component {
-  state = { user: null };
+  state = { user: GoogleSignIn.getCurrentUser(), loading: false };
   componentDidMount() {
     this.initAsync();
   }
@@ -42,8 +42,8 @@ export default class AuthButton extends React.Component {
     const signOutAsync = async () => {
       await GoogleSignIn.signOutAsync();
       await signOut(getAuth());
-      this.setState({ user: null });
       dispatch({ type: Types.LOGOUT, payload: {} });
+      this.setState({ user: null });
     };
 
     const signInAsync = async () => {
@@ -59,16 +59,20 @@ export default class AuthButton extends React.Component {
           signInWithCredential(getAuth(), credential).then((userCredential) => {
             if (user?.email)
               getDoc(doc(getFirestore(), "users", user?.email)).then((doc) => {
-                if (doc.exists())
+                if (doc.exists()) {
                   dispatch({
                     type: Types.LOGIN,
                     payload: {
                       email: user?.email,
                       ...doc.data(),
-                      isConnected: true,
                     },
                   });
-                else {
+                  if (
+                    !doc.data().Notifications ||
+                    doc.data().Notifications.length === 0
+                  )
+                    schedulePushNotification();
+                } else {
                   alert("This email is not registered");
                   signOutAsync();
                 }
@@ -77,11 +81,14 @@ export default class AuthButton extends React.Component {
           });
         }
       } catch ({ message }) {
-        alert("login: Error:" + message);
+        alert("login Error:" + message);
       }
     };
 
     const onPress = () => {
+      this.setState((state) => {
+        return { ...state, loading: true };
+      });
       if (this.state.user) {
         signOutAsync();
       } else {
@@ -105,7 +112,7 @@ export default class AuthButton extends React.Component {
           ...this.props.style,
         }}
       >
-        {!this.state.user && (
+        {!this.state.user && !this.state.loading && (
           <Svg
             xmlns="http://www.w3.org/2000/svg"
             x="0px"
@@ -128,8 +135,19 @@ export default class AuthButton extends React.Component {
             marginHorizontal: 10,
           }}
         >
-          {this.state.user ? "Sign Out" : "Signin with Google"}
+          {!this.state.loading &&
+            (this.state.user ? "Sign Out" : "Signin with Google")}
         </Text>
+        {this.state.loading && (
+          <ActivityIndicator
+            color={
+              this.state.user
+                ? Colors["backgroundColor"]
+                : Colors["primaryColor"]
+            }
+            size="large"
+          />
+        )}
       </TouchableOpacity>
     );
   }

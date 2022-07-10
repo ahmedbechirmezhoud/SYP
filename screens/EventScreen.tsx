@@ -28,6 +28,7 @@ export default function EventScreen() {
           <Text style={styles.button}>SEE ON MAPS</Text>
         </Pressable>
       </View>
+      <Text style={{ marginTop: 50 }}>No Data</Text>
       <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </View>
   );

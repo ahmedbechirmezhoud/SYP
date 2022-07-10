@@ -22,25 +22,58 @@ import EventScreen from "../screens/EventScreen";
 import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
 import WelcomeScreen from "../screens/WelcomeScreen/WelcomeScreen";
 
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import {
   addNotificationReceivedListener,
   addNotificationResponseReceivedListener,
   removeNotificationSubscription,
 } from "expo-notifications";
 import { useEffect, useRef, useState } from "react";
-import { getFirestore, doc, updateDoc } from "firebase/firestore";
-import { registerForPushNotificationsAsync } from "../services/notifications";
+import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
+import {
+  registerForPushNotificationsAsync,
+  schedulePushNotification,
+} from "../services/notifications";
 import { useContext } from "react";
 import { AppContext } from "../Context/AppContext";
 import { Types } from "../Context/types";
+import * as GoogleSignIn from "expo-google-sign-in";
 
 export default function Navigation() {
+  const { state, dispatch } = useContext(AppContext);
   const [user, setUser] = useState(null);
 
   onAuthStateChanged(getAuth(), () => {
     setUser(getAuth().currentUser);
   });
+
+  useEffect(() => {
+    if (user) {
+      getDoc(doc(getFirestore(), "users", user?.email)).then((doc) => {
+        if (doc.exists()) {
+          dispatch({
+            type: Types.LOGIN,
+            payload: {
+              email: user?.email,
+              ...doc.data(),
+            },
+          });
+          if (
+            !doc.data().Notifications ||
+            doc.data().Notifications.length === 0
+          )
+            schedulePushNotification();
+        } else {
+          (async () => {
+            await GoogleSignIn.signOutAsync();
+            await signOut(getAuth());
+          })();
+          dispatch({ type: Types.LOGOUT, payload: {} });
+          alert("This email is not registered");
+        }
+      });
+    }
+  }, [user]);
 
   return (
     <NavigationContainer linking={LinkingConfiguration}>
@@ -67,7 +100,6 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   const [expoPushToken, setExpoPushToken] = useState("");
-  const [notification, setNotification] = useState<any>();
   const notificationListener = useRef<any>();
   const responseListener = useRef<any>();
   const { state, dispatch } = useContext(AppContext);
@@ -79,7 +111,15 @@ function RootNavigator() {
 
     notificationListener.current = addNotificationReceivedListener(
       (notification) => {
-        setNotification(notification);
+        dispatch({
+          type: Types.ADD_NOTIFICATION,
+          payload: {
+            notification: {
+              title: notification.request.content.title,
+              message: notification.request.content.body,
+            },
+          },
+        });
       }
     );
 
