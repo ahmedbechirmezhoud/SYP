@@ -1,7 +1,10 @@
 // @ts-nocheck
 import { FontAwesome } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  useNavigationContainerRef,
+} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
 import { Pressable } from "react-native";
@@ -30,18 +33,25 @@ import {
 } from "expo-notifications";
 import { useEffect, useRef, useState } from "react";
 import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
+
 import {
   registerForPushNotificationsAsync,
   schedulePushNotification,
 } from "../services/notifications";
+
 import { useContext } from "react";
 import { AppContext } from "../Context/AppContext";
 import { Types } from "../Context/types";
 import * as GoogleSignIn from "expo-google-sign-in";
 
+import * as Analytics from "expo-firebase-analytics";
+
 export default function Navigation() {
   const { state, dispatch } = useContext(AppContext);
   const [user, setUser] = useState(null);
+
+  const navigationRef = useNavigationContainerRef();
+  const routeNameRef = useRef();
 
   onAuthStateChanged(getAuth(), () => {
     setUser(getAuth().currentUser);
@@ -76,7 +86,22 @@ export default function Navigation() {
   }, [user]);
 
   return (
-    <NavigationContainer linking={LinkingConfiguration}>
+    <NavigationContainer
+      ref={navigationRef}
+      onReady={() => {
+        routeNameRef.current = navigationRef.getCurrentRoute().name;
+      }}
+      onStateChange={async () => {
+        const previousRouteName = routeNameRef.current;
+        const currentRouteName = navigationRef.getCurrentRoute().name;
+
+        if (previousRouteName !== currentRouteName) {
+          await Analytics.setCurrentScreen(currentRouteName);
+        }
+        routeNameRef.current = currentRouteName;
+      }}
+      linking={LinkingConfiguration}
+    >
       {user ? <RootNavigator /> : <AuthNavigator />}
     </NavigationContainer>
   );

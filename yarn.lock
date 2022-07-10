@@ -4321,6 +4321,20 @@ expo-file-system@~14.0.0:
     "@expo/config-plugins" "^4.0.14"
     uuid "^3.4.0"
 
+expo-firebase-analytics@~7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/expo-firebase-analytics/-/expo-firebase-analytics-7.0.0.tgz#ca8b07fa27a60215364865dc1339c195a646d388"
+  integrity sha512-bDM+d6P0RbQbgAJQ2+Az/VHtMIbtKObdeR7UIsiB/m6HjGxqz8lO5/A6gkNbC1f24B0mQj5QEhR6Vwcdrbv9/w==
+  dependencies:
+    expo-firebase-core "~5.0.0"
+
+expo-firebase-core@~5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/expo-firebase-core/-/expo-firebase-core-5.0.0.tgz#0cdea28eafa8a4c45a30790d45354ef07522a755"
+  integrity sha512-OQ4oIuv+FyJ+tXc/bNulm7gAwYfEvt5yVVtr2ia6aqln+tsnVsNooyAMI+aJZ3y264rNXUocLGRN1TwV11DRsQ==
+  dependencies:
+    expo-constants "~13.1.0"
+
 expo-font@~10.1.0:
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-10.1.0.tgz#2e8f8954943c5afca8444c1ffb1d74623c6a4fb6"
