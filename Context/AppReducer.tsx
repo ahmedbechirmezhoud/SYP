@@ -13,6 +13,11 @@ export const userReducer = (state: User | null, action: UserActions) => {
   switch (action.type) {
     case Types.LOGIN:
       return action.payload;
+    case Types.ADD_NOTIFICATION:
+      return {
+        ...state,
+        Notifications: [...state?.Notifications, action.payload],
+      };
     case Types.LOGOUT:
       return defaultUser;
     default:
