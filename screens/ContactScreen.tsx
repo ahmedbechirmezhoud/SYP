@@ -6,6 +6,8 @@ import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 import { Linking } from "react-native";
 
+import * as Analytics from "expo-firebase-analytics";
+
 export default function ContactScreen() {
   const data = [
     {
@@ -58,9 +60,10 @@ export default function ContactScreen() {
             </View>
           </View>
           <Pressable
-            onPress={() =>
-              Linking.openURL(`whatsapp://send?phone=${member.WhatsappTel}`)
-            }
+            onPress={() => {
+              Analytics.logEvent("contact_whatsapp", member);
+              Linking.openURL(`whatsapp://send?phone=${member.WhatsappTel}`);
+            }}
           >
             <WhatsappLogo />
           </Pressable>
@@ -91,7 +94,12 @@ export default function ContactScreen() {
           >
             {val.name}
           </Text>
-          <TouchableOpacity onPress={() => Linking.openURL(`tel:${val.tel}`)}>
+          <TouchableOpacity
+            onPress={() => {
+              Analytics.logEvent("contact_emergency", val);
+              Linking.openURL(`tel:${val.tel}`);
+            }}
+          >
             <Text
               style={{
                 backgroundColor: Colors["primaryColor"],

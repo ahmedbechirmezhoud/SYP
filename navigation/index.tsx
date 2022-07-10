@@ -136,6 +136,7 @@ function RootNavigator() {
 
     notificationListener.current = addNotificationReceivedListener(
       (notification) => {
+        Analytics.logEvent("Notification_Received", notification);
         dispatch({
           type: Types.ADD_NOTIFICATION,
           payload: {

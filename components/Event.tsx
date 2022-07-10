@@ -6,6 +6,8 @@ import Layout from "../constants/Layout";
 import { useEffect, useState } from "react";
 import moment from "moment";
 
+import * as Analytics from "expo-firebase-analytics";
+
 interface EventProps {
   title: string;
   from: string[];
@@ -38,6 +40,11 @@ export default function Event({ title, from, to, day, Icon }: EventProps) {
   return (
     <Pressable
       onPress={() => {
+        Analytics.logEvent("event_clicked", {
+          title,
+          eventTime:
+            `${from[0]}:${from[1]}` + (to[0] && ` - ${to[0]}:${to[1]}`),
+        });
         navigation.navigate("Event", {
           title: title,
           time: `${from[0]}:${from[1]}` + (to[0] && ` - ${to[0]}:${to[1]}`),
