@@ -59,7 +59,6 @@ export const styles = StyleSheet.create({
     title: {
         fontSize: 22,
         fontWeight: "bold",
-        color: "#FFFAF4"
     },
     syp_congress: {
         fontSize: 30,

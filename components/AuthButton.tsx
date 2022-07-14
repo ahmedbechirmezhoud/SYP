@@ -103,6 +103,7 @@ export default class AuthButton extends React.Component {
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "center",
+          minHeight: 48,
           backgroundColor: this.state.user
             ? Colors["primaryColor"]
             : Colors["backgroundColor"],

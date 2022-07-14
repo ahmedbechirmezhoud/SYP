@@ -12,6 +12,7 @@ import Svg, { Path } from "react-native-svg";
 import { styles } from "./style";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import AuthButton from "../../components/AuthButton";
+import Colors from "../../constants/Colors";
 
 export default function WelcomeScreen({ navigation }: any) {
   const continuePressEvent = () => {};
@@ -35,24 +36,52 @@ export default function WelcomeScreen({ navigation }: any) {
           <View style={styles.container}>
             {/* Use seperated images with no display absolute to make sure no white text overlaps an image */}
             <Image
+              style={{ tintColor: Colors["backgroundColor"] }}
               source={require("./../../assets/images/welcome_bg/vec_top.png")}
             />
             <View style={styles.welcomeTextContainer}>
-              <Text style={styles.title}>WELCOME TO</Text>
-              <Text style={styles.syp_congress}>SYP CONGRESS</Text>
+              <Text
+                style={[styles.title, { color: Colors["backgroundColor"] }]}
+              >
+                WELCOME TO
+              </Text>
+              <Text
+                style={[
+                  styles.syp_congress,
+                  { color: Colors["backgroundColor"] },
+                ]}
+              >
+                SYP CONGRESS
+              </Text>
             </View>
             <Image
-              style={styles.marginBot}
+              style={[
+                styles.marginBot,
+                { tintColor: Colors["backgroundColor"] },
+              ]}
               source={require("./../../assets/images/welcome_bg/vec_mid.png")}
             />
             <Image
-              style={styles.marginBot}
+              style={[
+                styles.marginBot,
+                { tintColor: Colors["backgroundColor"] },
+              ]}
               source={require("./../../assets/images/welcome_bg/vec_bot.png")}
             />
 
             <View style={styles.identifierContainer}>
-              <Text style={{ ...styles.white, ...styles.title }}>SIGN IN</Text>
-              <Text style={{ ...styles.white, fontSize: 12, lineHeight: 12 }}>
+              <Text
+                style={{ color: Colors["backgroundColor"], ...styles.title }}
+              >
+                SIGN IN
+              </Text>
+              <Text
+                style={{
+                  color: Colors["backgroundColor"],
+                  fontSize: 12,
+                  lineHeight: 12,
+                }}
+              >
                 Please Sign in with the email provided during your registration
               </Text>
 
@@ -61,7 +90,7 @@ export default function WelcomeScreen({ navigation }: any) {
           </View>
           <View style={styles.footer}>
             <Image
-              style={styles.logo}
+              style={[styles.logo, { tintColor: Colors["backgroundColor"] }]}
               source={require("./../../assets/images/logo_footer.png")}
             />
           </View>

@@ -21,6 +21,7 @@ export type EventProps = {
   location: string;
   time: string;
   Icon?: any;
+  color: string;
 };
 
 export type AuthStackParamList = {

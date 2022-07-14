@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     },
     currentUser: {
         marginTop: 40,
-        width: "100%",
+        width: "90%",
         textAlign: "left",
         paddingLeft: 30,
         // paddingRight: 30
@@ -51,17 +51,17 @@ export const styles = StyleSheet.create({
         marginTop: 3,
     },
     currentIDTitle: {
-        color: "#858585",
+        color: Colors["tintColorLight"],
     },
     currentID: {
-        color: "#858585",
+        color: Colors["tintColorLight"],
         fontWeight: "bold",
         fontStyle: "italic",
     },
     customizeExp: {
-        color: "#525252",
         fontSize: 13.5,
-        marginTop: 3
+        marginTop: 3,
+        color: Colors["text"]
     },
     title: {
         fontSize: 18,

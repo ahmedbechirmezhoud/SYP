@@ -50,6 +50,12 @@ export default function Event({ title, from, to, day, Icon }: EventProps) {
           time: `${from[0]}:${from[1]}` + (to[0] && ` - ${to[0]}:${to[1]}`),
           location: "",
           Icon: Icon,
+          color:
+            state === "FUTURE"
+              ? Colors["primaryColor"]
+              : state === "NOW"
+              ? "#FF4D00"
+              : Colors["pastEventComponent"]["backgroundColor"],
         });
       }}
       style={[
@@ -59,8 +65,8 @@ export default function Event({ title, from, to, day, Icon }: EventProps) {
             state === "FUTURE"
               ? Colors["primaryColor"]
               : state === "NOW"
-              ? Colors["primaryColor"]
-              : Colors["tintColorLight"],
+              ? "#FF4D00"
+              : Colors["pastEventComponent"]["backgroundColor"],
           marginLeft: state === "NOW" ? 50 : 30,
         },
       ]}
@@ -69,7 +75,7 @@ export default function Event({ title, from, to, day, Icon }: EventProps) {
         <Icon
           fill={
             state === "PAST"
-              ? Colors["primaryColor"]
+              ? Colors["pastEventComponent"]["TextColor"]
               : Colors["backgroundColor"]
           }
           style={{ marginLeft: 10, marginRight: 25 }}
@@ -80,18 +86,26 @@ export default function Event({ title, from, to, day, Icon }: EventProps) {
       <View style={{ flexDirection: "column" }}>
         <Text
           style={{
-            color: state === "PAST" ? "#1E1E1E" : Colors["backgroundColor"],
+            color:
+              state === "PAST"
+                ? Colors["pastEventComponent"]["TextColor"]
+                : Colors["backgroundColor"],
             letterSpacing: 0.5,
             fontSize: 15,
+            fontWeight: "bold",
           }}
         >
           {title}
         </Text>
         <Text
           style={{
-            color: state === "PAST" ? "#1E1E1E" : Colors["backgroundColor"],
+            color:
+              state === "PAST"
+                ? Colors["pastEventComponent"]["TextColor"]
+                : Colors["backgroundColor"],
             letterSpacing: 0.5,
             fontSize: 10,
+            fontWeight: "bold",
           }}
         >
           {from[0] + ":" + from[1]} {to[0] && "-" + to[0] + ":" + to[1]}

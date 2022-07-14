@@ -53,10 +53,16 @@ export default function ContactScreen() {
           >
             <Image source={member.image} />
             <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+              <Text
+                style={{
+                  fontSize: 16,
+                  fontWeight: "bold",
+                  color: Colors["text"],
+                }}
+              >
                 {member.name}
               </Text>
-              <Text>{member.position}</Text>
+              <Text style={{ color: Colors["text"] }}>{member.position}</Text>
             </View>
           </View>
           <Pressable
@@ -90,6 +96,7 @@ export default function ContactScreen() {
               fontSize: 16,
               fontWeight: "bold",
               width: Layout.window.width * 0.6,
+              color: Colors["text"],
             }}
           >
             {val.name}
@@ -106,7 +113,7 @@ export default function ContactScreen() {
                 paddingHorizontal: 10,
                 paddingVertical: 5,
                 borderRadius: 10,
-                color: Colors["backgroundColor"],
+                color: "#fff",
                 alignItems: "center",
                 justifyContent: "center",
                 fontSize: 14,
