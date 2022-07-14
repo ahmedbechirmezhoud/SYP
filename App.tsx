@@ -4,18 +4,9 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import useCachedResources from "./hooks/useCachedResources";
 import Navigation from "./navigation";
 
-import { setNotificationHandler } from "expo-notifications";
 import { useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import { AppContext, AppProvider } from "./Context/AppContext";
-
-setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
 
 const firebaseConfig = {
   apiKey: "AIzaSyDX8JG_kPw0oR41PE6Q_J2NW3qJMvuaNcY",
@@ -41,7 +32,6 @@ export default function App() {
       <AppProvider>
         <AppContext.Consumer>
           {(value) => {
-            console.log(value);
             return (
               <SafeAreaProvider>
                 <Navigation />

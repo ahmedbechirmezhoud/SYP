@@ -16,10 +16,6 @@ export async function getTokens(Segment = "ALL", notification) {
     querySnapshot = db.collection("users");
   } else if (Segment === "STAFF") {
     querySnapshot = db.collection("users").where("staff", "==", true);
-  } else if (Segment === "COMITE") {
-    querySnapshot = db.collection("users").where("comite", "==", true);
-  } else if (Segment === "HACKATHON") {
-    querySnapshot = db.collection("users").where("hackathon", "==", true);
   } else {
     console.error("INVALID SEGMENT");
     return;
@@ -28,15 +24,15 @@ export async function getTokens(Segment = "ALL", notification) {
   const docs = await querySnapshot.get();
   var batch = db.batch();
   docs.forEach((doc) => {
-    if (doc.data()?.notificationToken) {
+    if (doc.data()?.NotificationToken) {
       PushTokens.push(doc.data()?.NotificationToken);
       console.log("sending to " + doc.data()?.FirstName);
     }
     batch.update(db.collection("users").doc(doc.id), {
       Notifications: doc.data()?.Notifications
         ? [
-            ...doc.data()?.Notifications,
             { title: notification.title, message: notification.body },
+            ...doc.data()?.Notifications,
           ]
         : [{ title: notification.title, message: notification.body }],
     });

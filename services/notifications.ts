@@ -1,6 +1,15 @@
 import { isDevice } from "expo-device";
-import { getPermissionsAsync, requestPermissionsAsync, getExpoPushTokenAsync, setNotificationChannelAsync, AndroidImportance, scheduleNotificationAsync } from "expo-notifications";
+import { getPermissionsAsync, requestPermissionsAsync, getExpoPushTokenAsync, setNotificationChannelAsync, AndroidImportance, scheduleNotificationAsync, setNotificationHandler } from "expo-notifications";
 import { Platform } from "react-native";
+
+
+setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 
 export async function registerForPushNotificationsAsync() {
@@ -10,7 +19,7 @@ export async function registerForPushNotificationsAsync() {
         await getPermissionsAsync();
       let finalStatus = existingStatus;
       if (existingStatus !== "granted") {
-        const { status } = await requestPermissionsAsync();
+        const { status } = await requestPermissionsAsync(); 
         finalStatus = status;
       }
       if (finalStatus !== "granted") {
@@ -18,7 +27,6 @@ export async function registerForPushNotificationsAsync() {
         return;
       }
       token = (await getExpoPushTokenAsync()).data;
-      console.log(token);
     } else {
       alert("Must use physical device for Push Notifications");
     }

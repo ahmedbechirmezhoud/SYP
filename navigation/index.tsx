@@ -130,9 +130,9 @@ function RootNavigator() {
   const { state, dispatch } = useContext(AppContext);
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token: any) =>
-      setExpoPushToken(token || "")
-    );
+    registerForPushNotificationsAsync().then((token: any) => {
+      setExpoPushToken(token || "");
+    });
 
     notificationListener.current = addNotificationReceivedListener(
       (notification) => {
@@ -160,24 +160,6 @@ function RootNavigator() {
       removeNotificationSubscription(responseListener.current);
     };
   }, []);
-
-  onAuthStateChanged(getAuth(), async (currUser) => {
-    if (currUser) {
-      CurrentUser.updateInfo({ NotificationToken: expoPushToken });
-      await updateDoc(doc(getFirestore(), "users", currUser.email || ""), {
-        NotificationToken: expoPushToken,
-      }).catch((error) => alert(error));
-    }
-  });
-
-  useEffect(() => {
-    dispatch({
-      type: Types.UPDATE_NOTIFICATIONTOKEN,
-      payload: {
-        NotificationToken: expoPushToken,
-      },
-    });
-  }, [expoPushToken]);
 
   return (
     <Stack.Navigator>
