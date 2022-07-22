@@ -107,7 +107,7 @@ export default function Navigation() {
         }}
         linking={LinkingConfiguration}
       >
-        {user ? <RootNavigator /> : <AuthNavigator />}
+        <RootNavigator />
       </NavigationContainer>
     );
   }

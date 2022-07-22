@@ -16,7 +16,7 @@ import { AppContext } from "../Context/AppContext";
 import { Types } from "../Context/types";
 
 export default class AuthButton extends React.Component {
-  state = { user: GoogleSignIn.getCurrentUser(), loading: false };
+  state = { user: "dfs", loading: false };
   componentDidMount() {
     this.initAsync();
   }

@@ -11,7 +11,13 @@ import {
 
 export const defaultUser = {
   email: "",
-  Notifications: [],
+  Notifications: [
+    {
+      title: "Welcome dear participant🥳❤️",
+      message:
+        "The Organizing Committee wishes you an unforgettable experience⚡",
+    },
+  ],
   IEEEID: "",
   FirstName: "",
   LastName: "",
