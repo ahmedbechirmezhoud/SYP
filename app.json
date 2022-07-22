@@ -2,7 +2,7 @@
   "expo": {
     "name": "SYP",
     "slug": "SYP",
-    "version": "1.0.0",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -31,10 +31,11 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#FFF4F4"
       },
+      "permissions": [],
       "package": "com.ieee.syp",
       "googleServicesFile": "./google-services.json",
       "softwareKeyboardLayoutMode": "pan",
-      "versionCode": 3
+      "versionCode": 7
     },
     "web": {
       "favicon": "./assets/images/favicon.png",

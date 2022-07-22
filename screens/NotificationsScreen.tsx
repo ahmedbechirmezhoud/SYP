@@ -1,7 +1,14 @@
 // @ts-nocheck
 import { StatusBar } from "expo-status-bar";
 import { useContext } from "react";
-import { Platform, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 import { AppContext } from "../Context/AppContext";
@@ -14,13 +21,15 @@ export default function NotificationsScreen() {
       <ScrollView style={styles.warpper}>
         {state.user.Notifications ? (
           state.user.Notifications.map((notif, idx) => (
-            <View key={idx} style={styles.notification}>
+            <TouchableOpacity key={idx} style={styles.notification}>
               <Text style={styles.title}> {notif.title} </Text>
               <Text style={styles.message}>{notif.message}</Text>
-            </View>
+            </TouchableOpacity>
           ))
         ) : (
-          <Text style={{ fontWeight: "bold", marginTop: 50 }}>
+          <Text
+            style={{ fontWeight: "bold", marginTop: 50, color: Colors["text"] }}
+          >
             No Notification Found
           </Text>
         )}

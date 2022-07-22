@@ -54,7 +54,7 @@ export default [
     "day": 4,
     "Icon": PreparationsIcon
   },
-  { "title": "Keynotes", "from": ["08", "30"], "to": ["09", "30"], "day": 4, "Icon": PreparationsIcon },
+  { "title": "Keynotes", "from": ["08", "30"], "to": ["09", "30"], "day": 4, "Icon": KeynotesIcon },
   {
     "title": "Break / Networking",
     "from": ["09", "30"],
