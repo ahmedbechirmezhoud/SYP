@@ -9,7 +9,7 @@ import {
   UserActions,
 } from "./types";
 import * as Analytics from "expo-firebase-analytics";
-import { doc, getFirestore, updateDoc } from "firebase/firestore";
+import { doc, getFirestore, setDoc, updateDoc } from "firebase/firestore";
 
 const updateNotificationToken = async (email, NotificationToken) => {
   await updateDoc(doc(getFirestore(), "users", email || ""), {
@@ -25,6 +25,12 @@ export const userReducer = (state: User | null, action: UserActions) => {
         action.payload.FirstName + " " + action.payload.LastName
       );
       Analytics.logEvent("context_Login", action.payload);
+      if (action.payload.inAppRegister)
+        setDoc(doc(getFirestore(), "users", action.payload.email), {
+          FirstName: action.payload.FirstName,
+          LastName: action.payload.LastName,
+          inAppRegister: action.payload.inAppRegister,
+        });
       return action.payload;
     case Types.ADD_NOTIFICATION:
       Analytics.logEvent("context_add_notification", action.payload);

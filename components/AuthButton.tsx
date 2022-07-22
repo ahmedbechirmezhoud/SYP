@@ -11,7 +11,7 @@ import {
 import Svg, { Path } from "react-native-svg";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { AppContext } from "../Context/AppContext";
 import { Types } from "../Context/types";
 
@@ -58,25 +58,32 @@ export default class AuthButton extends React.Component {
           );
           signInWithCredential(getAuth(), credential).then((userCredential) => {
             if (user?.email)
-              getDoc(doc(getFirestore(), "users", user?.email)).then((doc) => {
-                if (doc.exists()) {
-                  dispatch({
-                    type: Types.LOGIN,
-                    payload: {
-                      email: user?.email,
-                      ...doc.data(),
-                    },
-                  });
-                  if (
-                    !doc.data().Notifications ||
-                    doc.data().Notifications.length === 0
-                  )
-                    schedulePushNotification();
-                } else {
-                  alert("This email is not registered");
-                  signOutAsync();
+              getDoc(doc(getFirestore(), "users", user?.email)).then(
+                async (doc) => {
+                  if (doc.exists()) {
+                    dispatch({
+                      type: Types.LOGIN,
+                      payload: {
+                        email: user?.email,
+                        ...doc.data(),
+                      },
+                    });
+                  } else {
+                    dispatch({
+                      type: Types.LOGIN,
+                      payload: {
+                        email: user?.email,
+                        FirstName: user?.firstName,
+                        LastName: user?.lastName,
+                        inAppRegister: true,
+                      },
+                    });
+                    alert(
+                      "This email was not registered to any of our participants"
+                    );
+                  }
                 }
-              });
+              );
             else alert("Error while Login");
           });
         }

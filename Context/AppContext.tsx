@@ -18,6 +18,7 @@ export const defaultUser = {
   Gender: "",
   DateofBirth: "",
   CountryOfResidence: "",
+  inAppRegister: false,
 };
 
 const initialState: stateType = {
