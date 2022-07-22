@@ -7,7 +7,7 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { Pressable } from "react-native";
+import { ActivityIndicator, Pressable, View } from "react-native";
 
 import Colors from "../constants/Colors";
 import NotificationsScreen from "../screens/NotificationsScreen";
@@ -25,33 +25,31 @@ import EventScreen from "../screens/EventScreen";
 import ProfileScreen from "../screens/ProfileScreen/ProfileScreen";
 import WelcomeScreen from "../screens/WelcomeScreen/WelcomeScreen";
 
-import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
   addNotificationReceivedListener,
   addNotificationResponseReceivedListener,
   removeNotificationSubscription,
 } from "expo-notifications";
 import { useEffect, useRef, useState } from "react";
-import { getFirestore, doc, updateDoc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
-import {
-  registerForPushNotificationsAsync,
-  schedulePushNotification,
-} from "../services/notifications";
+import { registerForPushNotificationsAsync } from "../services/notifications";
 
 import { useContext } from "react";
 import { AppContext } from "../Context/AppContext";
 import { Types } from "../Context/types";
-import * as GoogleSignIn from "expo-google-sign-in";
 
 import * as Analytics from "expo-firebase-analytics";
 
 export default function Navigation() {
   const { state, dispatch } = useContext(AppContext);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
 
   const navigationRef = useNavigationContainerRef();
   const routeNameRef = useRef();
+
+  const [appIsReady, setAppIsReady] = useState(false);
 
   onAuthStateChanged(getAuth(), () => {
     setUser(getAuth().currentUser);
@@ -68,43 +66,51 @@ export default function Navigation() {
               ...doc.data(),
             },
           });
-          if (
-            !doc.data().Notifications ||
-            doc.data().Notifications.length === 0
-          )
-            schedulePushNotification();
-        } else {
-          (async () => {
-            await GoogleSignIn.signOutAsync();
-            await signOut(getAuth());
-          })();
-          dispatch({ type: Types.LOGOUT, payload: {} });
-          alert("This email is not registered");
         }
+        setAppIsReady(true);
       });
+    } else if (user !== undefined) {
+      setAppIsReady(true);
     }
   }, [user]);
 
-  return (
-    <NavigationContainer
-      ref={navigationRef}
-      onReady={() => {
-        routeNameRef.current = navigationRef.getCurrentRoute().name;
-      }}
-      onStateChange={async () => {
-        const previousRouteName = routeNameRef.current;
-        const currentRouteName = navigationRef.getCurrentRoute().name;
+  if (!appIsReady) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          backgroundColor: Colors["backgroundColor"],
+          flexDirection: "row",
+          justifyContent: "space-around",
+          padding: 10,
+        }}
+      >
+        <ActivityIndicator size="large" color={Colors["primaryColor"]} />
+      </View>
+    );
+  } else {
+    return (
+      <NavigationContainer
+        ref={navigationRef}
+        onReady={() => {
+          routeNameRef.current = navigationRef.getCurrentRoute().name;
+        }}
+        onStateChange={async () => {
+          const previousRouteName = routeNameRef.current;
+          const currentRouteName = navigationRef.getCurrentRoute().name;
 
-        if (previousRouteName !== currentRouteName) {
-          await Analytics.setCurrentScreen(currentRouteName);
-        }
-        routeNameRef.current = currentRouteName;
-      }}
-      linking={LinkingConfiguration}
-    >
-      {user ? <RootNavigator /> : <AuthNavigator />}
-    </NavigationContainer>
-  );
+          if (previousRouteName !== currentRouteName) {
+            await Analytics.setCurrentScreen(currentRouteName);
+          }
+          routeNameRef.current = currentRouteName;
+        }}
+        linking={LinkingConfiguration}
+      >
+        {user ? <RootNavigator /> : <AuthNavigator />}
+      </NavigationContainer>
+    );
+  }
 }
 
 const AuthStack = createNativeStackNavigator<AuthStackParamList>();
@@ -124,15 +130,12 @@ function AuthNavigator() {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const [expoPushToken, setExpoPushToken] = useState("");
   const notificationListener = useRef<any>();
   const responseListener = useRef<any>();
   const { state, dispatch } = useContext(AppContext);
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token: any) => {
-      setExpoPushToken(token || "");
-    });
+    registerForPushNotificationsAsync();
 
     notificationListener.current = addNotificationReceivedListener(
       (notification) => {
