@@ -42,8 +42,7 @@ export const userReducer = (state: User | null, action: UserActions) => {
       Analytics.logEvent("context_Logout", action.payload);
       return defaultUser;
     case Types.UPDATE_NOTIFICATIONTOKEN:
-      state.email &&
-        updateNotificationToken(state.email, action.payload.NotificationToken);
+      updateNotificationToken(state.email, action.payload.NotificationToken);
       return { ...state, NotificationToken: action.payload.NotificationToken };
     default:
       return state;

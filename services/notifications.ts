@@ -43,14 +43,3 @@ export async function registerForPushNotificationsAsync() {
     return token;
   }
   
-
-export async function schedulePushNotification() {
-  await scheduleNotificationAsync({
-    content: {
-      title: "Hi Tester 🥳",
-      body: "We are waiting for your feedback on ahmedbechir.mezhoud@ieee.org",
-      sticky :true
-    },
-    trigger: 2,
-  });
-}

@@ -135,7 +135,12 @@ function RootNavigator() {
   const { state, dispatch } = useContext(AppContext);
 
   useEffect(() => {
-    registerForPushNotificationsAsync();
+    registerForPushNotificationsAsync().then((token) => {
+      dispatch({
+        type: Types.UPDATE_NOTIFICATIONTOKEN,
+        payload: { NotificationToken: token },
+      });
+    });
 
     notificationListener.current = addNotificationReceivedListener(
       (notification) => {
