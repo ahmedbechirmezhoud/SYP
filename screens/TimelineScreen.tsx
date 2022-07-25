@@ -23,14 +23,9 @@ export default function TimelineScreen() {
   }, [fadeAnim, days]);
 
   useEffect(() => {
-    if (
-      moment("2022-08-04 15:00:00").isBetween(
-        "2022-08-03 00:00:00",
-        "2022-08-07 23:59:59"
-      )
-    )
+    if (moment().isBetween("2022-08-03 00:00:00", "2022-08-07 23:59:59"))
       setDays((prev) => {
-        for (let idx = 0; idx <= moment("2022-08-04 15:00:00").day() - 4; idx++)
+        for (let idx = 0; idx <= moment().day() - 4; idx++)
           prev.push(prev.shift() || 0);
         return [...prev];
       });
