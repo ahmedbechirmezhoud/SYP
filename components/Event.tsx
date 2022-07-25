@@ -21,15 +21,11 @@ export default function Event({ title, from, to, day, Icon }: EventProps) {
   const [state, setState] = useState<"PAST" | "NOW" | "FUTURE">("PAST");
 
   useEffect(() => {
-    if (
-      moment(`2022-08-0${day} ${from[0] + ":" + from[1]}:00`).isBefore(
-        "2022-08-04 15:00:00"
-      )
-    )
+    if (moment(`2022-08-0${day} ${from[0] + ":" + from[1]}:00`).isBefore())
       setState("PAST");
     else setState("FUTURE");
     if (
-      moment("2022-08-04 15:00:00").isBetween(
+      moment().isBetween(
         `2022-08-0${day} ${from[0] + ":" + from[1]}:00`,
         `2022-08-0${day} ${to[0] + ":" + to[1]}:00`
       )

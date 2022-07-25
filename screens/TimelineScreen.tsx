@@ -103,12 +103,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     justifyContent: "space-evenly",
-    width: Layout.window.width,
+    width: Layout.window.width - 15,
     marginTop: 50,
   },
   day: {
     color: "#9D9D9D",
     fontSize: 17,
+    paddingVertical: 2,
+    paddingHorizontal: 10,
     //fontFamily: "futura",
   },
   active: {
