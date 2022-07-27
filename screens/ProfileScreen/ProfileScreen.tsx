@@ -1,5 +1,6 @@
 // @ts-nocheck
 import {
+  Alert,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -12,9 +13,13 @@ import { styles } from "./style";
 import QRCode from "react-native-qrcode-svg";
 import { useContext } from "react";
 import { AppContext } from "../../Context/AppContext";
+import CustomButton from "../../components/CustomButton/CustomButton";
+import Colors from "../../constants/Colors";
+import { deleteUser, getAuth } from "firebase/auth";
+import { Types } from "../../Context/types";
 
 export default function ProfileScreen() {
-  const { state } = useContext(AppContext);
+  const { state, dispatch } = useContext(AppContext);
 
   return (
     <KeyboardAvoidingView
@@ -38,6 +43,32 @@ export default function ProfileScreen() {
           </View>
 
           <View style={styles.changeIDSection}>
+            <CustomButton
+              onPress={() => {
+                Alert.alert(
+                  "Delete Account Permanently",
+                  "Are you sure you want to delete your account ?",
+                  [
+                    {
+                      text: "Cancel",
+                      style: "cancel",
+                    },
+                    {
+                      text: "Delete",
+                      onPress: () => {
+                        deleteUser(getAuth().currentUser).then(() => {
+                          dispatch({ type: Types.LOGOUT });
+                        });
+                      },
+                    },
+                  ]
+                );
+              }}
+              style={{ marginTop: 10 }}
+              title="Delete Account"
+              color={Colors["backgroundColor"]}
+              bgColor={"#EE4B2B"}
+            />
             <AuthButton />
           </View>
         </>
