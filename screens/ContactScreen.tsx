@@ -13,13 +13,13 @@ export default function ContactScreen() {
     {
       name: "Khaldoun Taktak",
       position: "Congress Chair",
-      WhatsappTel: "21629205239",
+      WhatsappTel: "21652514907",
       image: require("../assets/images/contact/KhaldounTaktak.png"),
     },
     {
       name: "Rim Chihi",
       position: "Participants Coordinator",
-      WhatsappTel: "21629205239",
+      WhatsappTel: "21626902542",
       image: require("../assets/images/contact/RimChihi.png"),
     },
   ];
