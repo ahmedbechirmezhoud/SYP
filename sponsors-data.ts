@@ -46,5 +46,17 @@ export default [
         "filename": require("./assets/images/sponsors/SMU.png"),
         "type": "Gold",
         "link": "https://www.smu.tn/"
+    },
+    {
+        "name": "Clevory Academy",
+        "filename": require("./assets/images/sponsors/clevory_academy.png"),
+        "type": "Gold",
+        "link": "https://www.clevoryacademy.com/"
+    },
+    {
+        "name": "Clevory Training",
+        "filename": require("./assets/images/sponsors/clevorytraining.png"),
+        "type": "Gold",
+        "link": "https://www.clevory.com/"
     }
 ]
