@@ -13,6 +13,7 @@ import { styles } from "./style";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import AuthButton from "../../components/AuthButton";
 import Colors from "../../constants/Colors";
+import AppleAuthButton from "../../components/AppleAuthButton";
 
 export default function WelcomeScreen({ navigation }: any) {
   const continuePressEvent = () => {};
@@ -85,7 +86,10 @@ export default function WelcomeScreen({ navigation }: any) {
                 Please Sign in with the email provided during your registration
               </Text>
 
-              <AuthButton style={{ alignSelf: "center", marginTop: 30 }} />
+              <AuthButton
+                style={{ alignSelf: "center", marginTop: 30, marginBottom: 10 }}
+              />
+              <AppleAuthButton />
             </View>
           </View>
           <View style={styles.footer}>
