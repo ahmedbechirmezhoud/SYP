@@ -17,8 +17,12 @@ import CustomButton from "../../components/CustomButton/CustomButton";
 import Colors from "../../constants/Colors";
 import { deleteUser, getAuth } from "firebase/auth";
 import { Types } from "../../Context/types";
+import { useNavigation } from "@react-navigation/native";
+import { RootStackParamList } from "../../types";
 
-export default function ProfileScreen() {
+export default function ProfileScreen({
+  navigation,
+}: RootStackParamList<"Sponsors">) {
   const { state, dispatch } = useContext(AppContext);
 
   return (
@@ -45,6 +49,15 @@ export default function ProfileScreen() {
           <View style={styles.changeIDSection}>
             <CustomButton
               onPress={() => {
+                navigation.navigate("Sponsors");
+              }}
+              style={{ marginTop: 10 }}
+              title="Meet our Sponsors "
+              color={Colors["backgroundColor"]}
+              bgColor={Colors["primaryColor"]}
+            />
+            <CustomButton
+              onPress={() => {
                 Alert.alert(
                   "Delete Account Permanently",
                   "Are you sure you want to delete your account ?",
@@ -67,9 +80,14 @@ export default function ProfileScreen() {
               style={{ marginTop: 10 }}
               title="Delete Account"
               color={Colors["backgroundColor"]}
-              bgColor={"#EE4B2B"}
+              bgColor={Colors["tintColorDark"]}
             />
-            <AuthButton />
+            <CustomButton
+              style={{ marginTop: 10 }}
+              title="Sign Out"
+              color={Colors["backgroundColor"]}
+              bgColor={Colors["tintColorDark"]}
+            />
           </View>
         </>
       </TouchableWithoutFeedback>

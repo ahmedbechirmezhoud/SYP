@@ -34,6 +34,7 @@ export type RootStackParamList = {
   Notifications: undefined;
   Event: EventProps | undefined;
   NotFound: undefined;
+  Sponsors: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =

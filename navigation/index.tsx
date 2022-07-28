@@ -41,6 +41,7 @@ import { AppContext } from "../Context/AppContext";
 import { Types } from "../Context/types";
 
 import * as Analytics from "expo-firebase-analytics";
+import SponsorsScreen from "../screens/SponsorsSreen";
 
 export default function Navigation() {
   const { state, dispatch } = useContext(AppContext);
@@ -107,7 +108,7 @@ export default function Navigation() {
         }}
         linking={LinkingConfiguration}
       >
-        {user ? <RootNavigator /> : <AuthNavigator />}
+        {!user ? <RootNavigator /> : <AuthNavigator />}
       </NavigationContainer>
     );
   }
@@ -199,6 +200,11 @@ function RootNavigator() {
           name="Notifications"
           component={NotificationsScreen}
           options={{ animation: "fade_from_bottom" }}
+        />
+        <Stack.Screen
+          name="Sponsors"
+          component={SponsorsScreen}
+          options={{ animation: "fade_from_bottom", title: "Our sponsors" }}
         />
         <Stack.Screen
           name="Event"

@@ -35,6 +35,7 @@ const linking: LinkingOptions<RootStackParamList> = {
       Welcome: 'welcome',
       Notifications: 'notifcations',
       Event: 'event',
+      Sponsors: "sponsors",
       NotFound: '*',
     },
   },
