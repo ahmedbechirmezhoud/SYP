@@ -15,9 +15,9 @@ import { useContext } from "react";
 import { AppContext } from "../../Context/AppContext";
 import CustomButton from "../../components/CustomButton/CustomButton";
 import Colors from "../../constants/Colors";
-import { deleteUser, getAuth } from "firebase/auth";
+import { deleteUser, getAuth, signOut } from "firebase/auth";
 import { Types } from "../../Context/types";
-import { useNavigation } from "@react-navigation/native";
+import * as GoogleSignIn from "expo-google-sign-in";
 import { RootStackParamList } from "../../types";
 
 export default function ProfileScreen({
@@ -70,7 +70,7 @@ export default function ProfileScreen({
                       text: "Delete",
                       onPress: () => {
                         deleteUser(getAuth().currentUser).then(() => {
-                          dispatch({ type: Types.LOGOUT });
+                          dispatch({ type: Types.LOGOUT, payload: {} });
                         });
                       },
                     },
@@ -83,6 +83,11 @@ export default function ProfileScreen({
               bgColor={Colors["tintColorDark"]}
             />
             <CustomButton
+              onPress={async () => {
+                await GoogleSignIn.signOutAsync();
+                await signOut(getAuth());
+                dispatch({ type: Types.LOGOUT, payload: {} });
+              }}
               style={{ marginTop: 10 }}
               title="Sign Out"
               color={Colors["backgroundColor"]}
