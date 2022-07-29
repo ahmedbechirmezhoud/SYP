@@ -15,7 +15,6 @@ import Layout from "../constants/Layout";
 export default function EventScreen() {
   const route = useRoute();
   const { time, title, location, Icon, color, lat, lng }: any = route.params;
-  console.log(lat);
 
   return (
     <View
