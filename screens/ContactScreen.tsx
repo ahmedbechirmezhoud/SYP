@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { Text, View, Image } from "react-native";
 import TelIcon from "../assets/Icons/TelIcon";
 import WhatsappLogo from "../assets/Icons/WhatsappLogo";
@@ -65,14 +65,14 @@ export default function ContactScreen() {
               <Text style={{ color: Colors["text"] }}>{member.position}</Text>
             </View>
           </View>
-          <Pressable
+          <TouchableOpacity
             onPress={() => {
               Analytics.logEvent("contact_whatsapp", member);
               Linking.openURL(`whatsapp://send?phone=${member.WhatsappTel}`);
             }}
           >
             <WhatsappLogo />
-          </Pressable>
+          </TouchableOpacity>
         </View>
       ))}
 
@@ -107,21 +107,29 @@ export default function ContactScreen() {
               Linking.openURL(`tel:${val.tel}`);
             }}
           >
-            <Text
+            <View
               style={{
                 backgroundColor: Colors["primaryColor"],
                 paddingHorizontal: 10,
                 paddingVertical: 5,
                 borderRadius: 10,
-                color: "#fff",
                 alignItems: "center",
-                justifyContent: "center",
-                fontSize: 14,
-                fontWeight: "bold",
+                justifyContent: "space-between",
+                flexDirection: "row",
               }}
             >
-              <TelIcon /> {val.tel}
-            </Text>
+              <TelIcon />
+              <Text
+                style={{
+                  color: "#fff",
+                  fontSize: 14,
+                  fontWeight: "bold",
+                  marginLeft: 6,
+                }}
+              >
+                {val.tel}
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
       ))}

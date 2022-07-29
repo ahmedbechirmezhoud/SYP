@@ -42,7 +42,7 @@ export default function TimelineScreen() {
               style={[styles.dayWarpper, i ? { flexDirection: "row" } : {}]}
             >
               {day === 3 && i ? <View style={styles.separator} /> : <></>}
-              <Animated.Text
+              <Animated.View
                 onPress={() => {
                   fadeAnim.setValue(0);
                   setDays((prev) => {
@@ -51,11 +51,33 @@ export default function TimelineScreen() {
                     return [...prev];
                   });
                 }}
-                style={[styles.day, !i && styles.active, { opacity: fadeAnim }]}
+                style={[!i && styles.active, { opacity: fadeAnim }]}
                 key={i}
               >
-                {day}
-              </Animated.Text>
+                <Text
+                  onPress={() => {
+                    fadeAnim.setValue(0);
+                    setDays((prev) => {
+                      for (let idx = 0; idx <= i - 1; idx++)
+                        prev.push(prev.shift() || 0);
+                      return [...prev];
+                    });
+                  }}
+                  style={[
+                    {
+                      color: "#9D9D9D",
+                      fontSize: 17,
+                      paddingVertical: 2,
+                      paddingHorizontal: 10,
+                    },
+                    !i && {
+                      color: "#FFF4F4",
+                    },
+                  ]}
+                >
+                  {day}
+                </Text>
+              </Animated.View>
               {!i && (
                 <>
                   <Svg height="8" width="15">
@@ -107,17 +129,14 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   day: {
-    color: "#9D9D9D",
-    fontSize: 17,
     paddingVertical: 2,
     paddingHorizontal: 10,
     //fontFamily: "futura",
   },
   active: {
-    color: "#FFF4F4",
     backgroundColor: Colors["primaryColor"],
-    paddingVertical: 2,
-    paddingHorizontal: 18,
+    paddingHorizontal: 10,
+
     borderRadius: 11,
   },
   dayWarpper: {
