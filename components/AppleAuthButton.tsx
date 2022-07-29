@@ -3,8 +3,10 @@ import * as AppleAuthentication from "expo-apple-authentication";
 import { getAuth, OAuthProvider, signInWithCredential } from "firebase/auth";
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { useContext } from "react";
+import Layout from "../constants/Layout";
 import { AppContext } from "../Context/AppContext";
 import { Types } from "../Context/types";
+import { Appearance } from "react-native";
 
 export default function AppleAuthButton() {
   const { dispatch } = useContext(AppContext);
@@ -12,9 +14,19 @@ export default function AppleAuthButton() {
   return (
     <AppleAuthentication.AppleAuthenticationButton
       buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
-      buttonStyle={AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+      buttonStyle={
+        Appearance.getColorScheme() === "dark"
+          ? AppleAuthentication.AppleAuthenticationButtonStyle.BLACK
+          : AppleAuthentication.AppleAuthenticationButtonStyle.WHITE
+      }
       cornerRadius={5}
-      style={{ width: 200, height: 44 }}
+      style={{
+        width: Layout.window.width * 0.7,
+        height: 48,
+        alignSelf: "center",
+        marginTop: 30,
+        marginBottom: 10,
+      }}
       onPress={async () => {
         const nonce = Math.random().toString(36).substring(2, 10);
         try {
