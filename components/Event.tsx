@@ -14,9 +14,21 @@ interface EventProps {
   to: string[];
   day: string;
   Icon?: any;
+  lat?: string;
+  lng?: string;
+  location?: string;
 }
 
-export default function Event({ title, from, to, day, Icon }: EventProps) {
+export default function Event({
+  title,
+  from,
+  to,
+  day,
+  Icon,
+  lat,
+  lng,
+  location,
+}: EventProps) {
   const navigation = useNavigation();
   const [state, setState] = useState<"PAST" | "NOW" | "FUTURE">("PAST");
 
@@ -44,7 +56,6 @@ export default function Event({ title, from, to, day, Icon }: EventProps) {
         navigation.navigate("Event", {
           title: title,
           time: `${from[0]}:${from[1]}` + (to[0] && ` - ${to[0]}:${to[1]}`),
-          location: "",
           Icon: Icon,
           color:
             state === "FUTURE"
@@ -52,6 +63,9 @@ export default function Event({ title, from, to, day, Icon }: EventProps) {
               : state === "NOW"
               ? "#FF4D00"
               : Colors["pastEventComponent"]["backgroundColor"],
+          lat,
+          lng,
+          location,
         });
       }}
       style={[

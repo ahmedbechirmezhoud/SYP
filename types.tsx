@@ -18,10 +18,12 @@ declare global {
 
 export type EventProps = {
   title: string;
-  location: string;
+  location?: string;
   time: string;
   Icon?: any;
   color: string;
+  lat?: string;
+  lng?: string;
 };
 
 export type AuthStackParamList = {
@@ -76,4 +78,7 @@ export interface EventTimeline {
   to: string[];
   day: number;
   Icon: ({ fill, ...props }: { [x: string]: any; fill: any }) => JSX.Element;
+  lat?: string;
+  lng?: string;
+  location?: string;
 }

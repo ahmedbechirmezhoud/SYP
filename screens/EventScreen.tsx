@@ -1,12 +1,22 @@
 import { useRoute } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-import { Platform, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Linking,
+  Platform,
+  Pressable,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+} from "react-native";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
 
 export default function EventScreen() {
   const route = useRoute();
-  const { time, title, location, Icon, color }: any = route.params;
+  const { time, title, location, Icon, color, lat, lng }: any = route.params;
+  console.log(lat);
+
   return (
     <View
       style={[styles.container, { backgroundColor: Colors["backgroundColor"] }]}
@@ -25,14 +35,49 @@ export default function EventScreen() {
           />
         )}
         <Text style={styles.title}> {title}</Text>
-        <Text style={styles.time}> {time} </Text>
-        <Pressable>
-          <Text style={[styles.button, { backgroundColor: color }]}>
-            SEE ON MAPS
-          </Text>
-        </Pressable>
+        <Text style={[styles.time, !lat && !lng && { marginBottom: 50 }]}>
+          {" "}
+          {time}{" "}
+        </Text>
+        {lat && lng && (
+          <Pressable
+            onPress={() => {
+              const url = Platform.select({
+                ios: `maps:0,0?q=SPY ${title}@${lat},${lng}`,
+                android: `geo:0,0?q=${lat},${lng}(SYP ${title})`,
+              });
+              url && Linking.openURL(url);
+            }}
+          >
+            <Text style={[styles.button, { backgroundColor: color }]}>
+              SEE ON MAPS
+            </Text>
+          </Pressable>
+        )}
       </View>
-      <Text style={{ marginTop: 50, color: Colors["text"] }}>No Data</Text>
+      {!location ? (
+        <Text style={{ marginTop: 50, color: Colors["text"] }}>No Data</Text>
+      ) : (
+        <Text
+          style={{
+            marginTop: 20,
+            marginLeft: 30,
+            color: Colors["text"],
+            alignSelf: "flex-start",
+          }}
+        >
+          <Text
+            style={{
+              color: Colors["primaryColor"],
+              fontWeight: "bold",
+              letterSpacing: 2,
+            }}
+          >
+            location:{" "}
+          </Text>
+          {location}
+        </Text>
+      )}
       <StatusBar style={Platform.OS === "ios" ? "light" : "auto"} />
     </View>
   );

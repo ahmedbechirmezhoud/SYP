@@ -19,14 +19,22 @@ import TransportIcon from "./assets/Icons/TransportIcon";
 import TunisianIcon from "./assets/Icons/TunisianIcon";
 import WorkshopIcon from "./assets/Icons/WorkshopIcon";
 
+const locations = {
+  "Airport": {"lat": "36.8441575", "lng": "10.2029189", "location": "Tunis-Carthage International Airport"},
+  "Hotel": {"lat": "36.9205362", "lng": "10.287631", "location": "El Mouradi Gammarth, La Marsa" },
+  "cite de culture": {"lat": "36.811103570443024", "lng": "10.185907383902777", "location": "City of Culture Tunis" },
+  "perle du lac": {"lat" : "36.83078282701443", "lng": "10.2215252007224", "location": "la Perle du Lac"}
+}
+
 export default [
-  { "title": "Arrivals", "from": ["07", "00"], "to": ["13", "00"], "day": 3, "Icon": PlaneIcon },
+  { "title": "Arrivals", "from": ["07", "00"], "to": ["13", "00"], "day": 3, "Icon": PlaneIcon, ...locations["Airport"] },
   {
     "title": "Congress Check-In",
     "from": ["13", "00"],
     "to": ["15", "00"],
     "day": 3,
-    "Icon": CheckinIcon
+    "Icon": CheckinIcon,
+    ...locations["Hotel"]
   },
   { "title": "Transport", "from": ["15", "00"], "to": ["16", "00"], "day": 3, "Icon": TransportIcon },
   {
@@ -34,10 +42,11 @@ export default [
     "from": ["16", "00"],
     "to": ["18", "30"],
     "day": 3,
-    "Icon" : OpeningIcon
+    "Icon" : OpeningIcon,
+    ...locations["cite de culture"]
   },
   { "title": "Transport", "from": ["18", "30"], "to": ["19", "30"], "day": 3, "Icon": TransportIcon },
-  { "title": "Dinner", "from": ["19", "30"], "to": ["21", "00"], "day": 3, "Icon": DinnerIcon },
+  { "title": "Dinner", "from": ["19", "30"], "to": ["21", "00"], "day": 3, "Icon": DinnerIcon, ...locations["Hotel"] },
   {
     "title": "Preparations",
     "from": ["21", "00"],
@@ -46,7 +55,7 @@ export default [
     "Icon": PreparationsIcon
   },
   { "title": "Party", "from": ["22", "00"], "to": ["00", "00"], "day": 3, "Icon": PartyIcon },
-  { "title": "Breakfast", "from": ["07", "00"], "to": ["08", "00"], "day": 4, "Icon": BreakfastIcon },
+  { "title": "Breakfast", "from": ["07", "00"], "to": ["08", "00"], "day": 4, "Icon": BreakfastIcon, ...locations["Hotel"] },
   {
     "title": "Preparations",
     "from": ["08", "00"],
@@ -54,7 +63,7 @@ export default [
     "day": 4,
     "Icon": PreparationsIcon
   },
-  { "title": "Keynotes", "from": ["08", "30"], "to": ["09", "30"], "day": 4, "Icon": KeynotesIcon },
+  { "title": "Keynotes", "from": ["08", "30"], "to": ["09", "30"], "day": 4, "Icon": KeynotesIcon, ...locations["Hotel"] },
   {
     "title": "Break / Networking",
     "from": ["09", "30"],
@@ -62,7 +71,7 @@ export default [
     "day": 4,
     "Icon": BreakIcon
   },
-  { "title": "Workshops", "from": ["10", "00"], "to": ["11", "30"], "day": 4, "Icon": WorkshopIcon },
+  { "title": "Workshops", "from": ["10", "00"], "to": ["11", "30"], "day": 4, "Icon": WorkshopIcon, ...locations["Hotel"] },
   {
     "title": "Break / Networking",
     "from": ["11", "30"],
@@ -70,8 +79,8 @@ export default [
     "day": 4,
     "Icon": BreakIcon
   },
-  { "title": "Workshops", "from": ["12", "00"], "to": ["13", "30"], "day": 4, "Icon" :WorkshopIcon },
-  { "title": "Lunch", "from": ["13", "30"], "to": ["14", "30"], "day": 4, "Icon": LunchIcon },
+  { "title": "Workshops", "from": ["12", "00"], "to": ["13", "30"], "day": 4, "Icon" :WorkshopIcon, ...locations["Hotel"] },
+  { "title": "Lunch", "from": ["13", "30"], "to": ["14", "30"], "day": 4, "Icon": LunchIcon,...locations["Hotel"] },
   { "title": "Transport", "from": ["14", "30"], "to": ["15", "30"], "day": 4, "Icon": TransportIcon },
   {
     "title": "Touristic Tour and Group Photo",
@@ -94,10 +103,11 @@ export default [
     "from": ["20", "30"],
     "to": ["23", "30"],
     "day": 4,
-    "Icon": TunisianIcon
+    "Icon": TunisianIcon,
+    ...locations["perle du lac"]
   },
   { "title": "Transport", "from": ["23", "30"], "to": ["00", "00"], "day": 4, "Icon": TransportIcon },
-  { "title": "Breakfast", "from": ["07", "00"], "to": ["08", "00"], "day": 5, "Icon": BreakfastIcon },
+  { "title": "Breakfast", "from": ["07", "00"], "to": ["08", "00"], "day": 5, "Icon": BreakfastIcon,...locations["Hotel"] },
   {
     "title": "Preparations",
     "from": ["08", "00"],
@@ -105,7 +115,7 @@ export default [
     "day": 5,
     "Icon": PreparationsIcon
   },
-  { "title": "Keynotes", "from": ["08", "30"], "to": ["09", "30"], "day": 5, "Icon": KeynotesIcon },
+  { "title": "Keynotes", "from": ["08", "30"], "to": ["09", "30"], "day": 5, "Icon": KeynotesIcon,...locations["Hotel"] },
   {
     "title": "Break / Networking",
     "from": ["09", "30"],
@@ -113,7 +123,7 @@ export default [
     "day": 5,
     "Icon": BreakIcon
   },
-  { "title": "Workshops", "from": ["10", "00"], "to": ["11", "30"], "day": 5, "Icon": WorkshopIcon },
+  { "title": "Workshops", "from": ["10", "00"], "to": ["11", "30"], "day": 5, "Icon": WorkshopIcon,...locations["Hotel"] },
   {
     "title": "Break / Networking",
     "from": ["11", "30"],
@@ -121,8 +131,8 @@ export default [
     "day": 5,
     "Icon": BreakIcon
   },
-  { "title": "Workshops", "from": ["12", "00"], "to": ["13", "30"], "day": 5, "Icon": WorkshopIcon },
-  { "title": "Lunch", "from": ["13", "30"], "to": ["14", "30"], "day": 5, "Icon": LunchIcon },
+  { "title": "Workshops", "from": ["12", "00"], "to": ["13", "30"], "day": 5, "Icon": WorkshopIcon,...locations["Hotel"] },
+  { "title": "Lunch", "from": ["13", "30"], "to": ["14", "30"], "day": 5, "Icon": LunchIcon,...locations["Hotel"] },
   {
     "title": "Break / Networking",
     "from": ["14", "30"],
@@ -130,13 +140,13 @@ export default [
     "day": 5,
     "Icon": BreakIcon
   },
-  { "title": "Keynotes", "from": ["15", "00"], "to": ["16", "00"], "day": 5, "Icon": KeynotesIcon },
+  { "title": "Keynotes", "from": ["15", "00"], "to": ["16", "00"], "day": 5, "Icon": KeynotesIcon,...locations["Hotel"] },
   {
     "title": "Career Fair",
     "from": ["16", "00"],
     "to": ["17", "30"],
     "day": 5,
-    "Icon": CareerIcon
+    "Icon": CareerIcon,...locations["Hotel"]
   },
   {
     "title": "Break / Networking",
@@ -150,7 +160,7 @@ export default [
     "from": ["18", "00"],
     "to": ["20", "00"],
     "day": 5,
-    "Icon": PosterIcon
+    "Icon": PosterIcon,...locations["Hotel"]
   },
   {
     "title": "Preparations",
@@ -164,7 +174,7 @@ export default [
     "from": ["21", "00"],
     "to": ["00", "00"],
     "day": 5,
-    "Icon": MulticultureIcon
+    "Icon": MulticultureIcon,...locations["Hotel"]
   },
   { "title": "Breakfast", "from": ["07", "00"], "to": ["08", "00"], "day": 6, "Icon": BreakfastIcon },
   {
@@ -180,7 +190,7 @@ export default [
     "from": ["09", "30"],
     "to": ["10", "30"],
     "day": 6,
-    "Icon": PlenaryIcon
+    "Icon": PlenaryIcon,...locations["Hotel"]
   },
   {
     "title": "Break / Networking",
@@ -194,7 +204,7 @@ export default [
     "from": ["11", "00"],
     "to": ["12", "30"],
     "day": 6,
-    "Icon": PlenaryIcon
+    "Icon": PlenaryIcon,...locations["Hotel"]
   },
   { "title": "Lunch", "from": ["12", "30"], "to": ["14", "30"], "day": 6, "Icon": LunchIcon },
   {
@@ -209,7 +219,7 @@ export default [
     "from": ["15", "00"],
     "to": ["17", "00"],
     "day": 6,
-    "Icon": PlenaryIcon
+    "Icon": PlenaryIcon,...locations["Hotel"]
   },
   { "title": "Transport", "from": ["17", "00"], "to": ["18", "00"], "day": 6, "Icon": TransportIcon },
   {
@@ -224,7 +234,7 @@ export default [
     "from": ["19", "30"],
     "to": ["00", "00"],
     "day": 6,
-    "Icon": GalaIcon
+    "Icon": GalaIcon,...locations["Hotel"]
   },
   { "title": "Breakfast", "from": ["07", "00"], "to": ["08", "00"], "day": 7, "Icon": BreakfastIcon },
   {
@@ -239,14 +249,14 @@ export default [
     "from": ["08", "30"],
     "to": ["10", "00"],
     "day": 7,
-    "Icon": OpeningIcon
+    "Icon": OpeningIcon,...locations["Hotel"]
   },
   {
     "title": "Congress Checkout",
     "from": ["10", "00"],
     "to": ["13", "30"],
     "day": 7,
-    "Icon": CheckinIcon
+    "Icon": CheckinIcon,...locations["Hotel"]
   },
   { "title": "Departure", "from": ["13", "30"], "to": ["", ""], "day": 7, "Icon": DepartureIcon }
 ]
