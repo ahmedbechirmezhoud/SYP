@@ -65,7 +65,8 @@ export default function AppleAuthButton() {
                         inAppRegister: true,
                       },
                     });
-                    alert(
+                    Alert.alert(
+                      "Warning",
                       "This email was not registered to any of our participants"
                     );
                   }

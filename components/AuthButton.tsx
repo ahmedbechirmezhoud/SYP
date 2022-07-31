@@ -1,6 +1,6 @@
 // @ts-nocheck
 import React from "react";
-import { ActivityIndicator, Text, TouchableOpacity } from "react-native";
+import { ActivityIndicator, Alert, Text, TouchableOpacity } from "react-native";
 import * as GoogleSignIn from "expo-google-sign-in";
 import {
   getAuth,
@@ -78,7 +78,8 @@ export default class AuthButton extends React.Component {
                         inAppRegister: true,
                       },
                     });
-                    alert(
+                    Alert.alert(
+                      "Warning",
                       "This email was not registered to any of our participants"
                     );
                   }

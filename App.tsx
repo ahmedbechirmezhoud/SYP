@@ -4,9 +4,12 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import useCachedResources from "./hooks/useCachedResources";
 import Navigation from "./navigation";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { initializeApp } from "firebase/app";
 import { AppContext, AppProvider } from "./Context/AppContext";
+
+import * as Network from "expo-network";
+import { Alert, BackHandler } from "react-native";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDX8JG_kPw0oR41PE6Q_J2NW3qJMvuaNcY",
@@ -20,12 +23,34 @@ const firebaseConfig = {
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
+  const [connected, setConnected] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     initializeApp(firebaseConfig);
+    Network.getNetworkStateAsync().then((state) => {
+      setConnected(state.isConnected && state.isInternetReachable);
+    });
   }, []);
 
-  if (!isLoadingComplete) {
+  useEffect(() => {
+    connected === false &&
+      Alert.alert(
+        "network problem",
+        "Please Check your Internet Connection then retry. ",
+        [
+          {
+            text: "Exit",
+            onPress: () => BackHandler.exitApp(),
+          },
+        ],
+        {
+          cancelable: true,
+          onDismiss: () => BackHandler.exitApp(),
+        }
+      );
+  }, [connected]);
+
+  if (!isLoadingComplete && !connected) {
     return null;
   } else {
     return (

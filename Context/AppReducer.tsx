@@ -36,7 +36,7 @@ export const userReducer = (state: User | null, action: UserActions) => {
       Analytics.logEvent("context_add_notification", action.payload);
       return {
         ...state,
-        Notifications: [...state?.Notifications, action.payload],
+        Notifications: [action.payload.notification, ...state?.Notifications],
       };
     case Types.LOGOUT:
       Analytics.logEvent("context_Logout", action.payload);
