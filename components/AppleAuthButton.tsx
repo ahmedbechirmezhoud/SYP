@@ -59,11 +59,26 @@ export default function AppleAuthButton() {
             getDoc(doc(getFirestore(), "users", userCredential.user.uid)).then(
               async (doc) => {
                 if (doc.exists()) {
+                  const {
+                    IEEEID,
+                    NotificationToken,
+                    Notifications,
+                    FirstName,
+                    LastName,
+                    Gender,
+                    DateofBirth,
+                  } = doc.data();
                   dispatch({
                     type: Types.LOGIN,
                     payload: {
-                      email: userCredential.user.uid,
-                      ...doc.data(),
+                      email: doc.id,
+                      IEEEID,
+                      NotificationToken,
+                      Notifications,
+                      FirstName,
+                      LastName,
+                      Gender,
+                      DateofBirth,
                     },
                   });
                 } else {
@@ -95,7 +110,7 @@ export default function AppleAuthButton() {
                       },
                     ],
                     "plain-text"
-                  );
+                  ); /*
                   if (ieeeid && Number(ieeeid) && length(ieeeid) === 8) {
                     const q = query(
                       collection(getFirestore(), "users"),
@@ -108,7 +123,7 @@ export default function AppleAuthButton() {
                         LastName: doc.data().LastName || "",
                       };
                     });
-                  }
+                  }*/
                   dispatch({
                     type: Types.LOGIN,
                     payload: {

@@ -33,14 +33,18 @@ export default function ProfileScreen({
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <>
           <View style={styles.QRImage}>
-            <QRCode value={state.user.IEEEID || "error"} size={150} />
+            <QRCode value={state.user?.IEEEID || "error"} size={150} />
             <Text style={{ fontSize: 10, marginTop: 5, fontWeight: "bold" }}>
               Participant ID
             </Text>
           </View>
           <View style={styles.currentUser}>
             <Text style={styles.welcome}>
-              WELCOME{!!state.user.FirstName && ","} {state.user.FirstName}
+              WELCOME
+              {!!state.user.FirstName &&
+                state.user.FirstName?.length > 1 &&
+                ","}{" "}
+              {state.user.FirstName}
             </Text>
 
             <Text style={styles.customizeExp}>
