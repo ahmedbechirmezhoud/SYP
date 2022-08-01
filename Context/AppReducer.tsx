@@ -30,7 +30,7 @@ export const userReducer = (state: User | null, action: UserActions) => {
           FirstName: action.payload.FirstName,
           LastName: action.payload.LastName,
           NewComer: action.payload.inAppRegister,
-          IEEEID: action.payload.IEEEID || "",
+          IEEEID: action.payload.IEEEID,
         });
       return action.payload;
     case Types.ADD_NOTIFICATION:
@@ -45,6 +45,8 @@ export const userReducer = (state: User | null, action: UserActions) => {
     case Types.UPDATE_NOTIFICATIONTOKEN:
       updateNotificationToken(state.email, action.payload.NotificationToken);
       return { ...state, NotificationToken: action.payload.NotificationToken };
+    case Types.UPDATE_IEEEID:
+      return { ...state, IEEEID: action.payload.IEEEID };
     default:
       return state;
   }

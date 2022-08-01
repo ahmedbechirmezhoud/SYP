@@ -39,7 +39,9 @@ export default function ProfileScreen({
             </Text>
           </View>
           <View style={styles.currentUser}>
-            <Text style={styles.welcome}>WELCOME, {state.user.FirstName}</Text>
+            <Text style={styles.welcome}>
+              WELCOME{!!state.user.FirstName && ","} {state.user.FirstName}
+            </Text>
 
             <Text style={styles.customizeExp}>
               The IT Team wish you a great experience⚡

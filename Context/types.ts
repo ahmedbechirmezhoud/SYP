@@ -27,6 +27,7 @@ ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
     LOGOUT = "LOGOUT",
     ADD_NOTIFICATION = "ADD_NOTIFICATION",
     UPDATE_NOTIFICATIONTOKEN = "UPDATE_NOTIFICATIONTOKEN",
+    UPDATE_IEEEID = "UPDATE_IEEEID",
     FETCH_EVENTS ="FETCH_EVENTS",
     ADD_EVENT ="ADD_EVENT",
   }
@@ -42,6 +43,9 @@ ActionMap<UserPayload>[keyof ActionMap<UserPayload>];
     [Types.UPDATE_NOTIFICATIONTOKEN]: {
         NotificationToken: string;
       };
+    [Types.UPDATE_IEEEID]: {
+      IEEEID: string;
+    };
   };
   
 

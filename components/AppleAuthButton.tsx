@@ -10,7 +10,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Layout from "../constants/Layout";
 import { AppContext } from "../Context/AppContext";
 import { Types } from "../Context/types";
@@ -18,6 +18,7 @@ import { Alert, Appearance } from "react-native";
 
 export default function AppleAuthButton() {
   const { dispatch } = useContext(AppContext);
+  const { ieeeid, setIeeeid } = useState("");
 
   return (
     <AppleAuthentication.AppleAuthenticationButton
@@ -66,7 +67,6 @@ export default function AppleAuthButton() {
                     },
                   });
                 } else {
-                  let ieeeid: string | null = null;
                   let name = {
                     FirstName: appleCredential.fullName?.givenName || "",
                     LastName: appleCredential.fullName?.familyName || "",
@@ -77,7 +77,15 @@ export default function AppleAuthButton() {
                     [
                       {
                         text: "SUBMIT",
-                        onPress: (v) => (ieeeid = v),
+                        onPress: (v) => {
+                          setIeeeid(v);
+                          dispatch({
+                            type: Types.UPDATE_IEEEID,
+                            payload: {
+                              IEEEID: v,
+                            },
+                          });
+                        },
                         style: "default",
                       },
                       {
