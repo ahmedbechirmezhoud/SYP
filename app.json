@@ -15,12 +15,15 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.ieee.syp",
       "googleServicesFile": "./GoogleService-Info.plist",
       "usesAppleSignIn": true,
+      "buildNumber": "4",
       "config": {
         "googleSignIn": {
           "reservedClientId": "com.googleusercontent.apps.640548717558-dhdt10vs2tjqcs9338pk3gf06kmmgmsd"
@@ -36,7 +39,7 @@
       "package": "com.ieee.syp",
       "googleServicesFile": "./google-services.json",
       "softwareKeyboardLayoutMode": "pan",
-      "versionCode": 9
+      "versionCode": 10
     },
     "web": {
       "favicon": "./assets/images/favicon.png",

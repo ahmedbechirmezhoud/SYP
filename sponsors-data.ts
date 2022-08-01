@@ -30,10 +30,10 @@ export default [
         "link": "https://www.gat.com.tn/"
     },
     {
-        "name": "Topnet",
-        "filename": require("./assets/images/sponsors/topnet.png"),
+        "name": "Integration Objects",
+        "filename": require("./assets/images/sponsors/io.png"),
         "type": "Silver",
-        "link": "https://www.topnet.tn/"
+        "link": "https://integrationobjects.com/"
     },
     {
         "name": "UBCI",
