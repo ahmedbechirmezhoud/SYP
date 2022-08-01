@@ -1,12 +1,20 @@
 // @ts-nocheck
 import * as AppleAuthentication from "expo-apple-authentication";
 import { getAuth, OAuthProvider, signInWithCredential } from "firebase/auth";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  getFirestore,
+  query,
+  where,
+} from "firebase/firestore";
 import { useContext } from "react";
 import Layout from "../constants/Layout";
 import { AppContext } from "../Context/AppContext";
 import { Types } from "../Context/types";
-import { Appearance } from "react-native";
+import { Alert, Appearance } from "react-native";
 
 export default function AppleAuthButton() {
   const { dispatch } = useContext(AppContext);
@@ -24,12 +32,13 @@ export default function AppleAuthButton() {
         width: Layout.window.width * 0.7,
         height: 48,
         alignSelf: "center",
-        marginTop: 30,
+        marginTop: 10,
         marginBottom: 10,
       }}
       onPress={async () => {
         const nonce = Math.random().toString(36).substring(2, 10);
         try {
+          //get credentials with apple sign in button
           const appleCredential = await AppleAuthentication.signInAsync({
             requestedScopes: [
               AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
@@ -37,6 +46,7 @@ export default function AppleAuthButton() {
             ],
           });
 
+          // auth with firebase
           const provider = new OAuthProvider("apple.com");
 
           const credential = provider.credential({
@@ -45,34 +55,64 @@ export default function AppleAuthButton() {
           });
 
           signInWithCredential(getAuth(), credential).then((userCredential) => {
-            if (appleCredential.email)
-              getDoc(doc(getFirestore(), "users", appleCredential.email)).then(
-                async (doc) => {
-                  if (doc.exists()) {
-                    dispatch({
-                      type: Types.LOGIN,
-                      payload: {
-                        email: appleCredential.email,
-                        ...doc.data(),
+            getDoc(doc(getFirestore(), "users", userCredential.user.uid)).then(
+              async (doc) => {
+                if (doc.exists()) {
+                  dispatch({
+                    type: Types.LOGIN,
+                    payload: {
+                      email: userCredential.user.uid,
+                      ...doc.data(),
+                    },
+                  });
+                } else {
+                  let ieeeid: string | null = null;
+                  let name = {
+                    FirstName: appleCredential.fullName?.givenName || "",
+                    LastName: appleCredential.fullName?.familyName || "",
+                  };
+                  Alert.prompt(
+                    "IEEE ID",
+                    "This email was not registered to any of our participants. Please enter your IEEE ID to improve your experience",
+                    [
+                      {
+                        text: "SUBMIT",
+                        onPress: (v) => (ieeeid = v),
+                        style: "default",
                       },
-                    });
-                  } else {
-                    dispatch({
-                      type: Types.LOGIN,
-                      payload: {
-                        email: appleCredential.email,
-                        FirstName: appleCredential.fullName,
-                        inAppRegister: true,
+                      {
+                        text: "Cancel",
+                        onPress: () => {},
+                        style: "cancel",
                       },
-                    });
-                    Alert.alert(
-                      "Warning",
-                      "This email was not registered to any of our participants"
+                    ],
+                    "plain-text"
+                  );
+                  if (ieeeid && Number(ieeeid) && length(ieeeid) === 8) {
+                    const q = query(
+                      collection(getFirestore(), "users"),
+                      where("IEEEID", "==", ieeeid)
                     );
+                    const querySnapshot = await getDocs(q);
+                    querySnapshot.forEach((doc) => {
+                      name = {
+                        FirstName: doc.data().FirstName || "",
+                        LastName: doc.data().LastName || "",
+                      };
+                    });
                   }
+                  dispatch({
+                    type: Types.LOGIN,
+                    payload: {
+                      email: userCredential.user.uid,
+                      ...name,
+                      inAppRegister: true,
+                      IEEEID: ieeeid,
+                    },
+                  });
                 }
-              );
-            else alert("Error while Login");
+              }
+            );
           });
           // signed in
         } catch (e) {

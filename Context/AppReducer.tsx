@@ -29,7 +29,8 @@ export const userReducer = (state: User | null, action: UserActions) => {
         setDoc(doc(getFirestore(), "users", action.payload.email), {
           FirstName: action.payload.FirstName,
           LastName: action.payload.LastName,
-          inAppRegister: action.payload.inAppRegister,
+          NewComer: action.payload.inAppRegister,
+          IEEEID: action.payload.IEEEID || "",
         });
       return action.payload;
     case Types.ADD_NOTIFICATION:

@@ -23,7 +23,10 @@ export default function CustomButton({
       <View
         style={{
           ...styles.button,
+          minHeight: 48,
           backgroundColor: bgColor ?? "white",
+          alignItems: "center",
+          justifyContent: "center",
           width: width ?? "100%",
           ...style,
         }}

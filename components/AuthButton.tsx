@@ -11,7 +11,7 @@ import {
 import Svg, { Path } from "react-native-svg";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
-import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
+import { doc, getDoc, getFirestore } from "firebase/firestore";
 import { AppContext } from "../Context/AppContext";
 import { Types } from "../Context/types";
 
@@ -86,6 +86,10 @@ export default class AuthButton extends React.Component {
                 }
               );
             else alert("Error while Login");
+          });
+        } else {
+          this.setState((state) => {
+            return { ...state, loading: false };
           });
         }
       } catch ({ message }) {
