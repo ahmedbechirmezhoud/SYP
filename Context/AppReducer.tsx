@@ -30,7 +30,6 @@ export const userReducer = (state: User | null, action: UserActions) => {
           FirstName: action.payload.FirstName,
           LastName: action.payload.LastName,
           NewComer: action.payload.inAppRegister,
-          IEEEID: action.payload.IEEEID,
         });
       return action.payload;
     case Types.ADD_NOTIFICATION:

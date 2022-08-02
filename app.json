@@ -23,7 +23,7 @@
       "bundleIdentifier": "com.ieee.syp",
       "googleServicesFile": "./GoogleService-Info.plist",
       "usesAppleSignIn": true,
-      "buildNumber": "5",
+      "buildNumber": "8",
       "config": {
         "googleSignIn": {
           "reservedClientId": "com.googleusercontent.apps.640548717558-dhdt10vs2tjqcs9338pk3gf06kmmgmsd"

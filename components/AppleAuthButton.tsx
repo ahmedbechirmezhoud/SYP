@@ -85,7 +85,7 @@ export default function AppleAuthButton() {
                   let name = {
                     FirstName: appleCredential.fullName?.givenName || "",
                     LastName: appleCredential.fullName?.familyName || "",
-                  };
+                  }; /*
                   Alert.prompt(
                     "IEEE ID",
                     "This email was not registered to any of our participants. Please enter your IEEE ID to improve your experience",
@@ -110,7 +110,7 @@ export default function AppleAuthButton() {
                       },
                     ],
                     "plain-text"
-                  ); /*
+                  ); 
                   if (ieeeid && Number(ieeeid) && length(ieeeid) === 8) {
                     const q = query(
                       collection(getFirestore(), "users"),

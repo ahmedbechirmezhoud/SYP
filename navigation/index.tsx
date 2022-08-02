@@ -61,26 +61,11 @@ export default function Navigation() {
       const id = user?.providerId === "apple.com" ? user?.uid : user?.email;
       getDoc(doc(getFirestore(), "users", id)).then((doc) => {
         if (doc.exists()) {
-          const {
-            IEEEID,
-            NotificationToken,
-            Notifications,
-            FirstName,
-            LastName,
-            Gender,
-            DateofBirth,
-          } = doc.data();
           dispatch({
             type: Types.LOGIN,
             payload: {
               email: id,
-              IEEEID,
-              NotificationToken,
-              Notifications,
-              FirstName,
-              LastName,
-              Gender,
-              DateofBirth,
+              ...doc.data(),
             },
           });
         }
