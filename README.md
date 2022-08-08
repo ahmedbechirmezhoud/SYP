@@ -13,5 +13,5 @@ an accompanying app for the IEEE Region 8 SYP congress participants
 
 <p align="center">
     <a href="https://play.google.com/store/apps/details?id=com.ieee.syp" class="storebtn-gplay"><img height="50px" src="https://lh3.googleusercontent.com/q1k2l5CwMV31JdDXcpN4Ey7O43PxnjAuZBTmcHEwQxVuv_2wCE2gAAQMWxwNUC2FYEOnYgFPOpw6kmHJWuEGeIBLTj9CuxcOEeU8UXyzWJq4NJM3lg=s0" alt="Get in on Google Play" /></a>
-    <a href="" class="storebtn-appstore" alt="Download on the App Store" > <img height="50px" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" /> </a>
+    <a href="https://apps.apple.com/tn/app/r8-syp-tunis-2022/id1635045338" class="storebtn-appstore" alt="Download on the App Store" > <img height="50px" src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" /> </a>
 </p>
