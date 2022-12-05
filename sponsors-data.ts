@@ -34,6 +34,11 @@ export default [
         "filename": require("./assets/images/sponsors/io.png"),
         "type": "Silver",
         "link": "https://integrationobjects.com/"
+    },{
+        "name": "Topnet",
+        "filename": require("./assets/images/sponsors/topnet.png"),
+        "type": "Silver",
+        "link": "https://www.topnet.tn/"
     },
     {
         "name": "UBCI",
